@@ -1,0 +1,57 @@
+\def\encoding{UTF-8}
+\input{mmd-article-header}
+\def\mytitle{Partial fractions expansions}
+\def\subtitle{Review and further development for Laurent series and residues}
+\def\affiliation{The College of Idaho}
+\def\mydate{1 April 2013}
+\def\latexmode{article}
+\def\fonttheme{structurebold}
+\def\colortheme{crane}
+\def\theme{Szeged}
+\input{mmd-article-begin-doc}
+Let us find the partial fractions decomposition of
+ \[
+R(z) = \frac{z^2 + 4}{(z-2)(z-3)^2}.
+\] 
+The denominator is already factored and its degree exceeds that of the numerator. The PF expansion takes the form indicated in Theorem 2 of section 3.1:
+ \[
+\frac{z^2 + 4}{(z-2)(z-3)^2} = \frac{A^{(1)}_{0}}{z-2} + \frac{A^{(2)}_{0}}{(z - 3)^2} + \frac{A^{(2)}_{1}}{z - 3}
+\]
+ 
+Multiplying by $ z - 2 $ and taking a limit, we find that
+ \[
+A^{(1)}_{0} = \lim_{z \to 2} (z - 2) R(z) = 8.
+\] 
+To find $ A^{2}_{0} $ the process is similar:
+ \[
+A^{(2)}_0 = \lim_{z \to 3} (z - 3)^2 R(z) = 13.
+\] 
+Finally, to find $ A^{(2)}_{1} $, we add another step of differentiating. Observe that the $ z $-derivative of $ (z-3)^2 R(z) $ is
+ \[
+\frac{d}{dz} \left( (z-3)^2 R(z) \right) = \frac{d}{dz} \left( \frac{A^{(1)}_{0} (z-3)^2}{z-2} \right) + A^{(2)}_{1}}.
+\] 
+Taking the limit of each side as $ z \to 3 $, we find that $ A^{(2)}_{1} $ is equal to
+ \[
+\lim_{z \to 3} \frac{2z(z-2) - (z^2 + 4)}{(z-2)^2} = \frac{2 \cdot 3 \cdot 1 - 13}{1^2} = -7.
+\] 
+
+\begin{itemize}
+\item this is a rigged example, often the coefficients are fractional
+
+\item don't be alarmed if coefficients are sometimes 0
+
+\item analogy to factored form for zeroes.
+
+\item how do zeroes and poles behave under differentiation
+
+\item problem 4
+
+\item residues
+
+\item problems 19, 20, 21
+
+\end{itemize}
+
+\input{mmd-memoir-footer}
+
+\end{document}

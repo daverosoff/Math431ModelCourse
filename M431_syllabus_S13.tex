@@ -1,0 +1,84 @@
+\documentclass[11pt]{amsart}
+\usepackage{fancyhdr,graphicx,wrapfig,amsmath,amsthm,amssymb,latexsym}%,wrapfig,floatflt}
+%\usepackage[matrix,arrow,cmtip,curve,dvips]{xy}
+\DeclareGraphicsExtensions{.png}
+\input{commands}
+\usepackage{tabularx,dcolumn}
+\usepackage[utf8]{inputenc}%
+\usepackage[T1]{fontenc}%
+% \usepackage{textcomp}
+\usepackage[fulloldstylenums,largesmallcaps]{kpfonts}%
+\usepackage[left=1in,right=1in,bottom=1in,top=1in]{geometry}
+\usepackage{hyperref}
+\setlength{\parskip}{1.0ex} \setlength{\parindent}{0pt}
+\setlength{\headheight}{13pt} \setlength{\headsep}{8pt}
+\pagestyle{fancy}
+\linespread{1.01}
+\lhead{Mathematics 431}
+\chead{Spring 2013}
+\rhead{February 11}
+\lfoot{} \cfoot{} \rfoot{}
+%\newcommand{\officehours}{TBA}
+\newcommand{\officehours}{T~10--12; W~2--3; F~1--2}
+\begin{document}
+\thispagestyle{empty}
+
+%vspace*{-0.5ex}
+\begin{center}
+    {\Large Syllabus for \textbf{Complex Variables}, Spring 2013}
+\end{center}
+\begin{quote}
+    {\small \emph{That this subject [complex numbers] has hitherto been surrounded by mysterious obscurity, is to be attributed largely to an ill adapted notation. If, for example, $+1$, $-1$, and the square root of~$-1$ had been called \emph{direct}, \emph{inverse}, and \emph{lateral} units, instead of positive, negative, and imaginary (or even impossible), such an obscurity would have been out of the question.}}
+    \begin{flushright}
+        {\small Gauss}
+    \end{flushright}
+\end{quote}
+
+\begin{figure}[ht]
+\centering
+    \begin{tabularx}{1.0\textwidth}{XX}
+        \textbf{Meetings:} 10:20--11:20, MWF, Boone~104 
+                & \textbf{Office hours:} \officehours \\
+        \textbf{Instructor:} Dr.\ Dave Rosoff 
+                & \textbf{Email:} \nolinkurl{drosoff@collegeofidaho.edu} \\
+        \textbf{Office:} Boone Hall~102C 
+                & \textbf{Twitter:} \nolinkurl{@DaveRosoff}
+    \end{tabularx}
+\end{figure}
+\textbf{Greetings:} Welcome to MAT 431, \emph{Complex Variables}, or as I prefer to call it, \emph{Complex Analysis}. (The former is synonymous, only somewhat archaic.) I am very excited for this course. It was one of my favorite courses as an undergraduate, and in my personal opinion, is the  most elegantly and sublimely beautiful part of the undergraduate mathematics curriculum. That its foundational ideas form an essential part of applied mathematics and modern science, including (to name just a few) heat transfer, fluid flow and aerodynamics, quantum chemistry and physics, signal processing, fractals and complex dynamics, and electromagnetism, only adds to its magnificence.
+
+\textbf{Course objectives:} The College of Idaho catalog description of the course: ``A study of the calculus of functions of a complex variable. Topics include elementary functions, series representation, analytic functions, complex integration and conformal mappings.'' See below for a more comprehensive overview.
+
+\textbf{Text:} The textbook for the course is \emph{Fundamentals of Complex Analysis with Applications to Engineering and Science}, by E.~B.~Saff and A.~D.~Snider, 3rd edition. If you have not already, I suggest you purchase this book from the bookstore. You will need reliable, uninterrupted access to the book right away. If you have a previous edition, that is fine, but making sure you are aware of any differences between additions to the book (in particular, differently numbered or new problems) will be your sole responsibility. There are some errors in the book, but the authors maintain a \href{http://ee.eng.usf.edu/people/snider/PDF/Errata2.pdf}{list of errata} (find the URL in the Preface).
+
+\textbf{Grading:} Course grades will be computed as a weighted average of attendance-participation-quizzes (30\%), homework (34\%), and exams (36\%). See below for details. Note that it is not possible to earn a passing grade in the course without scoring at least $50\%$ on the final.
+
+\textbf{Homework:} Homework falls into two categories: \emph{daily} and \emph{weekly}. Daily homework problems will be largely computational and help you to learn your way around the new landscape of complex arithmetic, algebra, and calculus. These will not be graded (but will appear on quizzes; see below). Weekly homework problems are, for the most part, longer and more conceptual. They will take longer (often, more than one sitting) for you to understand and solve. You will periodically submit all weekly problems for review, in a portfolio. I will grade portfolio problems on an all-or-nothing basis. Problems may be submitted more than once. Of course I am happy to discuss any homework problem, daily or weekly, inside or outside of class. See also the headings Academic Honesty and Make-ups, below.
+
+\textbf{Quizzes:} Quizzes will be given every few days to help you make sure you are staying on top of the material. Quiz problems will come directly, or nearly so, from the assigned daily homework problems. Quizzes can not be made up.
+
+\textbf{Exams:} There will be three midterm exams and a final exam, each worth about 10\% of the course grade. Each exam consists of a portfolio component, during which you will solve problems that should be familiar from the homework, and a live component, which will contain problems that will test your understanding on a deeper, conceptual level.
+
+\textbf{Exam dates:} Let me know \emph{immediately} if you foresee a conflict. See below also for information regarding make-up exams.
+\begin{itemize}
+   \item Exam 1 (tentative): Wednesday, February 27
+   \item Exam 2 (tentative): Wednesday, March 20
+   \item Exam 3 (tentative): Wednesday, April 24
+   \item Final Exam: Tuesday, May 14, 1:30--4:30
+\end{itemize}
+%
+\textbf{Make-ups:} I will only consider make-up exams with a \emph{documented, compelling reason} and sufficient notice; otherwise, remaining exams will be reweighted. Homework portfolio due dates are not flexible. Students who are excused from class on portfolio submission dates will need to submit their portfolios before leaving. Since portfolio grades are not finalized until the last submission, I will not grade late portfolios, with the possible exception of the final submission. Heavy penalties will be assessed unless a compelling reason to excuse the lateness is documented. Quizzes can not be made up.
+
+\textbf{Course overview:} The official course title is misleading, because the real topic of the course is not variables, but \emph{functions}, namely: differentiable complex-valued functions of one complex variable. We will develop the arithmetic and algebra of the complex numbers in order to investigate their \emph{calculus}. Differentiability means something different for these functions than it does for functions~$\R \to \R$, or even functions~$\R^2 \to \R^2$. It is much more restrictive, hence complex-differentiable functions are more special. We will study the consequences of differentiability, beginning with harmonic functions and the Cauchy--Riemann equations; the complex extensions of familiar differentiable functions; and the heart of the course, integration of complex functions over paths in the plane and the celebrated result known to us as \emph{Cauchy's Integral Formula}. We may, as time permits, discuss additional topics such as power series representations, residue theory, conformal mapping, or integral transforms.
+
+\textbf{A note on reading:} Based on my experience teaching upper-level mathematics and on my experience as a student, I think it unlikely that you will get very much out of the course if you don't engage fully with the assigned readings. You may learn to do some computations, but they probably won't reflect any deeper meaning to you. Half an hour is not an unreasonable amount of time to spend rereading one page. In fact, you may find that much more is necessary. Every full stop (period mark) is an exhortation to ask yourself whether you truly understand what is being said. This kind of close reading is something most people are unused to, but it is a skill that comes with practice. 
+
+%\textbf{A note on homework:} This is a senior-level course, which means (among other things) that understanding on a deep conceptual level is the primary goal. In order to achieve this goal, you will need to develop some facility with calculation. That is why so many daily problems are assigned, at least in the beginning. You simply need the practice. If you neglect the practice in the beginning, you will not be able to follow the arguments later in the course---at least, not without great effort. 
+
+\textbf{Academic honesty:} Working together is encouraged, but assignments must be written up individually. Copied work will receive no credit---even if the work was discussed in collaboration with a classmate before write-up. In addition, it is expected that each student know and adhere to the College of Idaho Honor Code. 
+%: \emph{The College of Idaho is a community of integrity; therefore, we, the students, seek to promulgate a community in which integrity is valued, expected, and practiced. We are honor bound to refrain from cheating, stealing, or lying about College-related business. We are obligated to examine our own actions in light of their effect on the community, and we are responsible to address any violations of these community standards.} 
+Plagiarism, cheating, or borrowing without proper credit will not be tolerated. Violations of academic honesty can result in loss of credit on an assignment, failure on an exam, or failure in the course. A referral may be made to the Vice President for Academic Affairs for all parties involved in academic dishonesty.
+
+\textbf{Disability statement:} Students who have documented disabilities as addressed by the Americans with Disabilities Act and who need any test or course materials to be furnished in an alternative format should notify me immediately. Reasonable efforts will be made to accommodate the needs of these students.
+
+\end{document}

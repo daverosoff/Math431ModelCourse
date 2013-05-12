@@ -221,3 +221,8 @@ pip-log.txt
 *.log
 *.aux
 *.synctex.gz
+*.pdf
+*[Qq]uiz*
+*[Ee]xam*
+*[Ss]olution*
+*.out
