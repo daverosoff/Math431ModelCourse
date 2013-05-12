@@ -1,0 +1,281 @@
+<p>\documentclass[twocolumn,12pt]{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[fontsize=12pt,baseline=14pt]{grid}
+\usepackage[top=5.5cm,
+ bottom=2.5cm,
+ left=2.5cm,
+ right=2.5cm,
+]{geometry}
+\usepackage{xparse}
+\usepackage{fourier}
+\usepackage{amsmath,amsthm}
+\usepackage{amssymb,latexsym}
+%\input{commands}
+\usepackage{MnSymbol}
+\usepackage{gridleno}
+\usepackage{hyperref}
+\hypersetup{
+ colorlinks=true,
+ linkcolor=headtitle,
+ citecolor=grlnblue,
+ urlcolor=grlngray}</p>
+
+<p>\usetikzlibrary{calc,decorations.markings}</p>
+
+<p>\NewDocumentCommand\Z{}{\mathbf{Z}}
+\NewDocumentCommand\C{}{\mathbf{C}}
+\NewDocumentCommand\R{}{\mathbf{R}}
+\RenewDocumentCommand{\Re}{m}{\mathrm{Re}\;#1}
+\RenewDocumentCommand{\Im}{m}{\mathrm{Im}\;#1}
+\course{Complex Analysis}
+\courseid{431&#8211;01}
+\professor{Dave Rosoff}
+\term{Spring 2013}
+\topic{Complex Numbers: Algebra and Geometry}
+\date{February 11, 2013 (Mon)}</p>
+
+<p>%\hbadness=99999 % Make TeX remain silent</p>
+
+<p>\begin{document}</p>
+
+<p>\makeheader</p>
+
+<p>\begin{summary}
+ Numbers are created through a process called ``adjunction&#8217;&#8217;. We add numbers to the existing system by declaring them to be solutions to equations that otherwise do not exist. The set of integers is obtained from the whole numbers by adjoining $&#8211;1$, a formal additive inverse to $1$. The complex numbers are obtained from the real numbers by formally adjoining a solution $i$ to the equation $X^2 + 1 = 0$ and requiring this new number $i$ to interact smoothly with the existing arithmetic realm.
+\end{summary}</p>
+
+<p>\section{Creating numbers from equations}</p>
+
+<p>Complex numbers are expressions of the form
+\begin{gridenv}
+[
+ a + bi
+]
+\end{gridenv}
+where $a$ and $b$ are ordinary numbers, what we shall from now on call \emph{real numbers}. They are obtained from the real numbers by an algebraic process called \emph{adjunction}, which is very adequately described in Saff and Snider. Broadly, the idea is that there are several realms of <code>number'' that are arithmetically closed to various degrees. When mathematicians say</code>closed&#8217;&#8217;, one thing we are referring to is the solubility of equations.</p>
+
+<p>The positive integers are the most familiar number system, the counting numbers that everyone meets as a child. With our mathematical sensibilities we understand that including zero will lead to a more suitable arithmetic world: so we consider the non-negative integers $\Z_{\geq 0}$. They are not very satisfactory when it comes to solving equations. For example,
+\begin{gridenv}
+[
+ x + 5 = 3
+]
+\end{gridenv}
+has no solution in positive integers. The set~$\Z$ of integers, however, has better closure properties. In this enlarged set, where~$&#8211;1$ lives, we can solve all equations of the form
+\begin{gridenv}
+[
+ x + a = b
+]
+\end{gridenv}
+where~$a$ and~$b$ are positive integers. In fact,~$a$ and~$b$ don&#8217;t even have to be positive! So in the richer arithmetic <code>realm'', there are a lot more equations we can</code>solve&#8217;&#8217;. </p>
+
+<p>An algebraist thinks of $\Z$ as the <code>closure under addition'' of the set $\Z_{\geq 0} \cup \{-1\}$. What this means is that if you glom a new number $-1$ on to the existing set $\Z_{\geq 0}$ \emph{and insist that all the rules of arithmetic apply to it}, the smallest set of numbers you can get is $\Z$. In other words, $\Z$ is the minimal consistent collection of numbers that contains all the nonnegative integers together with $-1$. You can easily see that all of the negative integers are in this</code>closure&#8217;&#8217;; if $n$ is a positive integer, $-n$ is just an abbreviation for $(&#8211;1) + (&#8211;1) + \cdots + (&#8211;1)$ ($n$ summands).</p>
+
+<p>\section{Introducing complex numbers}
+We get the complex numbers by formal adjunction of a number $i$ satisfying $i^2 = &#8211;1$ to the existing universe of real numbers. The definition can be phrased as follows.
+\begin{definition}
+The set $\C$ of complex numbers is the closure of $\R \cup { i }$ under addition and multiplication.
+\end{definition}
+Addition and subtraction of complex numbers is quite simple, due to our requirements about how they interact with existing numbers.
+\begin{gridenv}
+ \begin{equation<em>}
+ (a + bi) \pm (c + di) = (a \pm c) + (b \pm d)i
+ \end{equation</em>}
+\end{gridenv}
+Multiplication is also simple, though the formula is perhaps less pleasing.
+\begin{gridenv}
+ \begin{equation<em>}
+ (a + bi)(c + di) = (ac - bd) + (ad + bc)i
+ \end{equation</em>}
+\end{gridenv}
+It is not advisable to memorize this formula. Instead, remember that it is derived by using the ordinary rules of algebra to expand the left-hand side, and the defining property of $i$, that is, $i^2 = &#8211;1$.</p>
+
+<p>To divide two complex numbers, ``rationalize the denominator&#8217;&#8217;:
+\begin{gridenv}
+ \begin{align<em>}
+ \frac{a+bi}{c+di} &amp;= \frac{(a+bi)(c-di)}{(c+di)(c-di)} \
+ &amp;= \frac{(a+bi)(c-di)}{c^2+d^2}
+ \end{align</em>}
+\end{gridenv}
+Then it is simple to reduce the complex number to its standard form&#8212;a real number plus a real multiple of $i$. Complex numbers are determined by their standard forms: that is, if $a$, $b$, $c$, and $d$ are real, then
+$$a + bi = c + di$$
+if and only if $a = c$ and $b = d$. This gives rise to the following definition.</p>
+
+<p>\begin{definition}
+ If $z = a + bi$ is a complex number in standard form, then its \emph{real part} and \emph{imaginary part} are the real numbers
+ \begin{gridenv}
+ \begin{equation<em>}
+ \Re{z} = a, \quad \Im{z} = b,
+ \end{equation</em>}
+ \end{gridenv}
+ respectively.
+\end{definition}
+Note that the real and imaginary parts of a complex number are themselves both real numbers. You can check for yourself that $\C$ with these definitions is a vector space over $\R$, and that ${ 1, i }$ is a basis for $\C$ in this sense. (Don&#8217;t worry about this if you have not taken linear algebra.)</p>
+
+<p>\section{The geometry of complex numbers}</p>
+
+<p>Complex numbers can be interpreted geometrically. We are very used to thinking of real numbers as points on a line. Complex numbers are points in a plane, usually just called the complex plane. The number $z = a+ bi$ corresponds to the point usually labeled $(a,b)$. That is, we plot real parts on the horizontal axis and imaginary parts on the vertical axis. Thus addition of complex numbers is made to correspond with vector addition of the points in $\R^2$ that underlie the complex plane. This is formally expressed in the next theorem, whose proof is assigned as a daily homework problem.
+%
+\begin{theorem}
+ Let $z_1$ and $z_2$ be complex numbers, and let $\vec{v}_1$ and $\vec{v}_2$ be the vectors they define as above. Then the vector defined by the complex number $z_1 + z_2$ is $\vec{v}_1 + \vec{v}_2$.
+\end{theorem}
+Next time we will discuss the geometric interpretation of multiplication.
+% \begin{example}
+% \begin{gridenv}
+% \begin{equation<em>}
+% F(s,t) = tx_0 + (1 - t)f(s)
+% \end{equation</em>}
+% \end{gridenv}
+% is a path homotopy between (f) and the constant loop (e_{x_0}).
+% \end{example}</p>
+
+<p>% \begin{example}
+% More generally, if X is any (\emph{convex}) subset of (\erren), then (\fgroup{X}{x}) is the trivial (one single element) group. The straight-line homotopy will work once again, for convexity of (X) means that for any two points (x) and (y) of (X), the straight-line segment
+% \begin{gridenv}
+% \begin{equation<em>}
+% {\, tx_0 + (1 - t)y \mid 0\leq t\leq 1\,}
+% \end{equation</em>}
+% \end{gridenv}
+% between them lies in (X). In particular, the \emph{unit ball} (\erren[n][B]) in (\erren),
+% \begin{gridenv}
+% \begin{equation<em>}
+% \erren[n][B] = {\, x \mid x_1^2 + \cdots + x_n^2\leq 1 \,},
+% \end{equation</em>}
+% \end{gridenv}
+% has trivial fundamental group.
+% \end{example}
+% An immediate question one asks is the ex-tent to which the fundamental group depends on the base point. The answer is given in Corollary~\ref{cor:indbase}, which follows.</p>
+
+<p>% \begin{definition}
+% Let (\alpha) be a path in (X) from (x_0) to (x_1). We define a map
+% \begin{gridenv}
+% \begin{equation<em>}
+% \hat{\alpha}:\fgroup{X}{x} \rightarrow \fgroup[1][1]{X}{x}
+% \end{equation</em>}
+% \end{gridenv}
+% by the equation
+% \begin{gridenv}
+% \begin{equation<em>}
+% \hat{\alpha}(\clase) = \opercl[\bar{\alpha}][f]\ast\clase[\alpha].
+% \end{equation</em>}
+% \end{gridenv}
+% \end{definition}
+% The map (\hat{\alpha}) is pictured in Figure~\ref{fig:indbase}. It is well-defined because the operation (\ast) is well-defined. If (f) is a loop based at (x_0), then (\oper[\bar{\alpha}][(\oper[f][\alpha])]) is a loop based at (x_1). Hence (\hat{\alpha}) maps (\fgroup{X}{x}) into (\fgroup[1][1]{X}{x}), as desired.</p>
+
+<p>% \begin{figure}
+% \centering
+% \begin{tikzpicture}[
+% point/.style={circle,inner sep=2pt,fill},
+% decoration={markings,
+% mark=at position 0.5 with {\arrow{stealth}}}
+% ]
+% \draw<a href="3,3">fill=summarybg,draw=none</a> rectangle (&#8211;3,&#8211;3);</p>
+
+<p>% \path<a href="0,0">fill=white</a> circle [radius=2.5cm];
+% \node[point,label=left:$x_0$] at (&#8211;1,&#8211;0.2) (a) {};
+% \node[point,label=right:$x_1$] at (1.2,1.3) (b) {};</p>
+
+<p>% \draw<a href="b.south">postaction={decorate},shorten &lt;= 1pt,shorten &gt;= 1pt</a> .. controls (&#8211;0.5,2) and (0.5,1.8) .. node[below=7pt] {$\bar{\alpha}$} (a.south);</p>
+
+<p>% \draw<a href="$(a.north)+(-1pt,0)$">postaction={decorate}</a> .. controls ($(0.5,1.8)+(0,10pt)$) and ($(&#8211;0.5,2)+(0,2pt)$) .. node[left=4pt] {$\alpha$} (b.north west);</p>
+
+<p>% \draw[postaction={decorate}] (a.south east) .. controls (&#8211;0.5,&#8211;3) and (2,1) .. node[label=below:$f$] {} (a.south west);
+% \end{tikzpicture}
+% \caption{}
+% \label{fig:indbase}
+% \end{figure}</p>
+
+<p>% \begin{theorem}
+% The map (\hat{\alpha}) is a group homomorphism.
+% \end{theorem}</p>
+
+<p>% \begin{Proof}
+% To prove that (\hat{\alpha}) is a homomorphism, we compute
+% \begin{gridenv}
+% \begin{multline<em>}
+% \hat{\alpha}(\clase) \ast \hat{\alpha}(\clase[g]) \
+% = ( \clase[\bar{\alpha}]\ast \clase \ast \clase[\alpha]) \ast (\clase[\bar{\alpha}]\ast \clase[g] \ast \clase[\alpha])\
+% = ( \clase[\bar{\alpha}]\ast \clase \ast \clase[g] \ast \clase[\alpha]) = \hat{\alpha}(\clase \ast \clase[g]).
+% \end{multline</em>}
+% \end{gridenv}
+% This proof uses the groupoid properties of (\ast). To show that (\hat{\alpha}) is an isomorphism, we show that if (\beta) denotes the path (\bar{\alpha}), which is the reverse of (\alpha), then (\hat{\beta}) is the inverse for (\hat{\alpha}). We compute, for each element (\clase[h]) of (\fgroup[1][1]{X}{x}),
+% \begin{gridenv}
+% \begin{equation<em>}
+% \hat{\alpha}(\hat{\beta}(\clase[h])) = \clase[\bar{\alpha}] \ast (\clase[\alpha] \ast \clase[h] \ast \clase[\bar{\alpha}]) \ast \clase[\alpha] = \clase[h]
+% \end{equation</em>}
+% \end{gridenv}
+% A similar computation shows that (\hat{\beta}(\hat{\alpha}(\clase))=\clase), for each class (\clase) in (\fgroup{X}{x}).
+% \end{Proof}</p>
+
+<p>% \begin{corollary}\label{cor:indbase}
+% If X is path connected and (x_0) and (x_1) are two points of (X), then (\fgroup{X}{x}) is isomorphic to (\fgroup[1][0]{X}{x}).
+% \end{corollary}</p>
+
+<p>% Suppose that (X) is a topological space. Let (C) be the path component of (X) containing (x_0). It is easy to see that (\fgroup[1][0]{C}{x}=\fgroup{X}{x}), since all loops and homotopies in (X) that are based at (x_0) must lie in the subspace (C). Thus (\fgroup{X}{x}) depends only on the path component of (X) containing (x_0), and gives us no information whatever about the rest of (X). For this reason, it is usual to deal only with path-connected spaces when studying the fundamental group.</p>
+
+<p>% If (X) is path connected, then all the groups (\fgroup[1][]{X}{x}) are isomorphic, so it is tempting to try to ``identify&#8217;&#8217; all these groups with one another, and to speak simply of the fundamental group of the space (X), without reference to base point. The difficulty with this approach is that there is no \emph{natural} way of identifying (\fgroup{X}{x}) with (\fgroup[1][1]{X}{x}); different paths (\alpha) and (\beta) from (x_0) to (x_1) may give raise to different isomorphisms between these groups. For this reason, onitting the base point can lead to error.</p>
+
+<p>% \section{Simply Connected Spaces}</p>
+
+<p>% \begin{definition}
+% A space (X) is said to be simply connected if it is a path-connected space and if (\fgroup{X}{x}) is the trivial group for some (x_0) in (X), and hence for every (x) in (X).
+% \end{definition}</p>
+
+<p>% \begin{lemma}
+% In a simply connected space (X), any two paths having the same initial and final points are path homotopic.
+% \end{lemma}</p>
+
+<p>% \begin{proof}
+% Let (f) and (g) be two paths from (x_0) to (x_1). Then (\oper[f][\bar{g}]) is defined and is a loop on (X) based at (x_0). Since (X) is simply connected, (\oper[f][\bar{g}]\sim_p e_{x_0}). Applying the groupoid properties, we see that
+% \begin{gridenv}
+% \begin{equation<em>}
+% \clase[(\oper[f][\bar{g}]) \ast g ] = \clase[\oper[e_{x_0}][g]] = \clase[g].
+% \end{equation</em>}
+% \end{gridenv}
+% But
+% \begin{gridenv}
+% \begin{equation<em>}
+% \clase[(\oper[f][\bar{g}]) \ast g ] = \clase[f \ast (\oper[\bar{g}][g]) ]=\clase[\oper[f][e_{x_0}]] = \clase[f].
+% \end{equation</em>}
+% \end{gridenv}
+% Thus (f) and (g) are path homotopic.
+% \end{proof}</p>
+
+<p>% \section{The fundamental group is a topological invariant}</p>
+
+<p>% It should be intuitively clear that the fundamental group is a topological invariant of the space (X). A convenient way to prove this fact formally is to introduce the notion of the ``homomorphism induced by a continuous map&#8217;&#8217;.</p>
+
+<p>% Suppose that (h:X\rightarrow Y) is a continuous map that carries the point (x_0) of (X) to the point (y_0) of (Y). We often denote this fact by writting
+% \begin{gridenv}
+% \begin{equation<em>}
+% h: (X,x_0)\rightarrow (Y,y_0).
+% \end{equation</em>}
+% \end{gridenv}
+% If (f) is a loop in (X) based at (x_0), then the composite (h\circ f:I\rightarrow Y) is a loop in (Y) based at (y_0). The correspondence (f\mapsto h\circ f) thus gives rise to a map carrying (\fgroup{X}{x}) to (\fgroup{Y}{y}).
+% \begin{exercises}
+% \begin{enumerate}
+% \item A subset (A) of (\erren) is said to be \emph{star convex} if for some point (a_0) of (A), all the line segments joining (a_0) to other points of (A) lie in (A).
+% \begin{enumerate}
+% \item Find a star convex set that is not convex.
+% \item Show that if (A) is star convex, (A) is simply connected.
+% \item Show that if (A) is star convex, any two paths in (A) having the same initial and final points are path homotopic.
+% \end{enumerate}
+% \item Let (x_0) and (x_1) be two given points of the path-connected space (X). Show that the group (\fgroup[1][1]{X}{x}) is abelian if and only if for every par (\alpha) and (\beta) of paths from (x_0) to (x_1), we have (\hat{\alpha}=\hat{\beta}).
+% \item Let (A\subseteq X) and let (r:X\rightarrow A) be a retraction. Given (a_0\in A), show that
+% \begin{gridenv}
+% \begin{equation*}
+% r<em>\ast:\fgroup[1][0]{X}{a}\rightarrow \fgroup[1][0]{A}{a}
+% \end{equation*}
+% \end{gridenv}
+% is surjective.
+% \item Let (A) be a subset of (\erren); let (h: (A,a_0)\rightarrow (Y,y_0)). Show that if (h) is extendable to a continuous map of (\erren) into (Y), then (h</em>\ast) is the zero homomorphism.
+% \end{enumerate}
+% \end{exercises}</p>
+
+<p>% \begin{thebibliography}{9}
+% \bibitem{munkres} Munkres, James R. \emph{Topology, A First Course}. Prentice Hall, Inc., 1975.
+% \bibitem{willard} Willard, Stephen. \emph{General Topology}. Massa-chusetts: Addison- Wesley, 1970.
+% \end{thebibliography}</p>
+
+<p>\end{document} </p>

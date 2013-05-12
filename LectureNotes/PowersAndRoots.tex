@@ -1,0 +1,109 @@
+\documentclass[twocolumn,12pt]{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[fontsize=12pt,baseline=14pt]{grid}
+\usepackage[top=5.5cm,
+  bottom=2.5cm,
+  left=2.5cm,
+  right=2.5cm,
+]{geometry}
+\usepackage{xparse}
+\usepackage{fourier}
+\usepackage{amsmath,amsthm}
+\usepackage{amssymb,latexsym}
+%\input{commands}
+\usepackage{MnSymbol}
+\usepackage{gridleno}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=yotepurple,
+  citecolor=grlnblue,
+  urlcolor=grlngray}
+
+\usetikzlibrary{calc,decorations.markings}
+
+\NewDocumentCommand{\Z}{}{\mathbf{Z}}
+\NewDocumentCommand{\C}{}{\mathbf{C}}
+\NewDocumentCommand{\R}{}{\mathbf{R}}
+\RenewDocumentCommand{\Re}{m}{\mathrm{Re}\;#1}
+\RenewDocumentCommand{\Im}{m}{\mathrm{Im}\;#1}
+%\NewDocumentCommand\arg{O{}}{\mathrm{arg}\;#1}
+%\DeclareMathOperator{\arg}{arg}
+\NewDocumentCommand\cis{O{}}{\mathrm{cis}\mkern2mu #1}
+\NewDocumentCommand\Arg{O{}}{\mathrm{Arg}\mkern1mu #1}
+\RenewDocumentCommand{\arg}{O{}O{}}{\mathrm{arg}_{#2}\mkern1mu #1}
+\NewDocumentCommand\conj{m}{\overline{#1}}
+%\DeclareMathOperator{\cis}{cis}
+%\DeclareMathOperator{\Arg}{Arg}
+\course{Complex Analysis}
+\courseid{431-01}
+\professor{Dave Rosoff}
+\term{Spring 2013}
+\topic{Powers and roots}
+\date{February 18, 2013 (Mon)}
+
+
+\begin{document}
+
+\makeheader
+
+\begin{summary}
+We discuss integer powers and roots of complex numbers and develop a little topology.
+\end{summary}
+\section{Integer powers and De Moivre's formula}
+Recall that for all real numbers $\theta$, we have
+\[
+  e^{i \theta} = \cos \theta + i \sin \theta.
+\]
+Taking the $n$th power of both sides yields
+\[
+  e^{i n \theta} = \cos n \theta + i \sin n \theta,
+\]
+a result known as \emph{De Moivre's formula}. It appears that if we write any complex number $z$ in its polar form $z = r e^{i \theta}$, we must obtain
+\begin{equation} \label{eq:polarmult}
+  z^n = r^n (\cos n \theta + i \sin n \theta).
+\end{equation}
+The formula is valid even for negative $n$ (this is Problem 1.5.2 in our textbook).
+\section{Roots}
+Having seen that we may easily compute integral powers of complex numbers, the next question to ask is whether we may compute fractional powers, known more commonly as roots. The na\"ive approach\footnote{This isn't meant to be insulting; in mathematics, ``na\"ive'' means ``straightforward, but ultimately insufficient''.} is to write
+\[
+  z^{1/n} = r^{1/n} e^{i \theta/n}
+\]
+and interpret $r^{1/n}$ in the usual way: the unique positive $n$th root of $r$ (recall that we assume $r = |z|$, so $r \geq 0$). This does indeed generate a number $\zeta$ (this letter is zeta, a Greek z) satisfying $\zeta^n = z$. That this procedure won't be enough to satisfy us is clear if you have noticed that all four of the numbers $\pm 1, \pm i$ are fourth roots of 1.
+\begin{theorem}
+  If $z$ is a nonzero complex number, then $z$ has precisely $n$ distinct $n$th roots.
+\end{theorem}
+This is a deeply satisfying result. No restrictions on $z$! It really does suggest that, having adjoined just one new number to the set $\R$, we've entered into a universe where polynomials have the correct number of solutions. 
+
+Writing the fourth roots of 1 in polar form helps to visualize why every complex number has four fourth roots (and in general, $n$ $n$th roots).
+\begin{align*}
+  1 &= e^{0i} \\
+  i &= e^{\pi i/2} \\
+  -1 &= e^{\pi i} \\
+  -i &= e^{3\pi i/2}
+\end{align*}
+Draw these numbers on the unit circle and see how their polar forms recapture the angles they make with the positive real axis. You should, for each of the four roots, trace out each of their first four powers. Use Equation~\eqref{eq:polarmult} to express those powers in polar form.
+%
+\begin{koan}
+Thinking about unit complex numbers (remember, unit complex numbers are those of length one; the numbers of the form $e^{i t}$) as \emph{rotation transformations} is a very elegant way to look at things. Think geometrically about the transformation ``multiply by $-1$'' on the number line, and why it should make sense that the transformation ``multiply by $i$'' should be its square root.
+\end{koan}
+%
+One consequence of the above discussion is that there are exactly $m$ complex numbers whose $m$th power is 1. These numbers are called the \emph{$m$th roots of unity}. They are frequently denoted by setting
+\[
+  \omega_m = e^{2\pi i k/m} = cos \frac{2k \pi}{m} + i \sin \frac{2k \pi}{m}.
+\]
+Having done this, you can check that the remaining roots of unity are $$\omega_m^2, \omega_m^3, \ldots, \omega_m^{m-1}, \omega_m^m = 1.$$. They satisfy the fundamental \emph{cyclotomic identity}
+\[
+  1 + \omega_m + \omega_m^2 + \cdots + \omega_m^{m-1} = 0.
+\]
+Our textbook gives a formula that provides all $m$ roots of an arbitrary complex number $z$, but easier to remember is the following: having found one $m$th root, acquire the rest by multiplying your root by the $m$th roots of unity. Thus the cube roots of 2 are $\sqrt[3]{2}$, $\omega_3 \sqrt[3]{2}$, and $\omega_3^2 \sqrt[3]{2}$. Not all $\omega_m$ admit nice descriptions in terms of their real and imaginary parts, but they do for $m = 2, 3, 4$ and a few other small numbers. In particular, we have (check!)
+\[
+  \omega_3 = \frac{-1 + \sqrt{3}}{2}, \quad \omega^2_3 = \frac{-1 - \sqrt{3}}{2}.
+\]
+\section{Exercises}
+\begin{exenumerate}
+  \item Find the real and imaginary parts of all five nontrivial powers of $\omega_6$.
+\end{exenumerate}
+\end{document} 

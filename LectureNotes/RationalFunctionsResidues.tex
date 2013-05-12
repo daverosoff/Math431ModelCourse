@@ -1,0 +1,110 @@
+\documentclass[twocolumn,12pt]{article}
+%\usepackage[greek, english]{babel}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[fontsize=12pt,baseline=14pt]{grid}
+\usepackage[top=5.5cm,
+  bottom=2.5cm,
+  left=2.5cm,
+  right=2.5cm,
+]{geometry}
+\usepackage{xparse}
+\usepackage{fourier}
+%\usepackage{kpfonts}
+\usepackage{amsmath,amsthm}
+%\usepackage{amssymb,latexsym}
+%\input{commands}
+\usepackage{MnSymbol}
+%\usepackage{textgreek}
+\usepackage{gridleno}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=yotepurple,
+  citecolor=grlnblue,
+  urlcolor=grlngray}
+
+\usetikzlibrary{calc,decorations.markings}
+
+\NewDocumentCommand\Z{}{\mathbf{Z}}
+\NewDocumentCommand\C{}{\mathbf{C}}
+\NewDocumentCommand\R{}{\mathbf{R}}
+\NewDocumentCommand\CC{}{\widehat{\C}}
+\RenewDocumentCommand{\Re}{m}{\mathrm{Re}\;#1}
+\RenewDocumentCommand{\Im}{m}{\mathrm{Im}\;#1}
+%\NewDocumentCommand{\deg}
+\course{Complex Analysis}
+\courseid{431-01}
+\professor{Dave Rosoff}
+\term{Spring 2013}
+\topic{Rational functions, poles, and residues}
+\date{April 1, 2013 (Mon)}
+
+%\hbadness=99999 % Make TeX remain silent
+
+\begin{document}
+
+\makeheader
+
+\begin{summary}
+
+  We establish essential facts regarding the multiplicative structure of the polynomial and rational functions. These functions are the foundation of further investigation into the behavior of analytic functions. This is a continuation of the notes from the previous meeting.
+
+  In the second part, we extend rational functions to the so-called ``meromorphic'' functions on the extended plane $\CC$ and discuss their order in terms of zeroes and poles.
+
+\end{summary}
+
+\section{Setup}
+
+A \emph{rational function} is a quotient of polynomials. It's helpful to bear in mind that in many ways (algebraically speaking) polynomials are to rational functions as integers are to rational numbers. Like rational numbers, rational functions have many equivalent representations. For another example, we saw how the division theorem allows us to express an ``improper'' rational function (one whose numerator degree exceeds its denominator degree) as the sum of a polynomial and a proper rational function, in precise analogy to the situation with integers.
+
+Of course, the salient difference between polynomials and rational functions is that rational functions have singularities. If $R(z) = P(z)/Q(z)$, where $P(z)$ and $Q(z)$ are polynomials sharing no common factor, then $R$ defines a function $R \colon \C - Z(Q) \to \C$, where
+\[
+  Z(Q) = \{ \zeta \in \C : Q(\zeta) = 0 \}
+\]
+is the zero-set of $Q(z)$. It is a consequence of previous results on analyticity that $R(z)$ is analytic throughout $\C - Z(Q)$. It is quite reasonable, having already constructed the extended complex plane $\CC = \C \cup \{ \infty \}$, to regard $R(z)$ as a function defined on the whole plane. On points of $Z(Q)$, we let $R(z) = \infty$. It is not really true that $R(z)$ is analytic on $\C$ with this definition, because ``analytic'' is a word we have only defined for complex-valued functions. Instead we say $R$ is \emph{meromorphic}%\footnote{The Greek word \greektext m'eros \latintext means ``part''. Meromorphic functions are analytic on part of the plane.}
+.
+
+It follows from the fundamental theorem of algebra that $Z(Q)$ is a finite set (it has at most $\deg{(Q)}$ elements). The zero-set $Z(R)$ coincides with the zero-set $Z(P)$, hence it is finite as well. In the exercises you show that $R(z) = w$ has finitely many solutions for all $w$ (in addition to $w = \infty$ and $w = 0$).
+
+Extending $R(z)$ to $\CC$ this way feels good, but is it good \emph{for} us? We shall see in the last section that $R(z)$ can be extended \emph{continuously} to all of $\C$ (or even $\CC$), and, later in the course, use this circle of ideas to characterize the rational functions as the class of functions meromorphic on $\CC$ that assume the value $\infty$ only finitely many times.
+
+\section{Poles}
+Let $R(z) = P(z)/Q(z)$ as above. The elements of the zero-set $Z(Q)$ are called \emph{poles} of $R$. Note that, as before, we are assuming that $P$ and $Q$ share no common factor. Therefore $Z(P) \cap Z(Q) = \emptyset$. We adopt the notation used in Saff and Snider (section 3.1) for the \emph{partial fraction decomposition} of proper rational functions (a rational function is proper if $\deg{(P)} < \deg{(Q)}$). 
+
+Just like zeroes, poles have multiplicity. The multiplicity of a pole $\zeta$ of $R$ is equal to the multiplicity of $\zeta$ as a zero of $Q$: the exponent with with the factor $z - \zeta$ occurs in the factored form of $R(z)$ (equivalently, $Q(z)$, since $P(z)$ is not divisible by $z - \zeta$). Poles of low multiplicity have special names. If the pole has multiplicity 1 (resp.\ 2), it is called a \emph{simple pole} (resp.\ \emph{double pole}).
+
+It follows from the existence theorem for partial fractions decompositions that, if $\zeta$ is a pole of $R$ of multiplicity $n$, then there are precisely $n$ terms in the partial fractions decomposition of $R$ whose denominators are powers of $z - \zeta$. This collection of terms is called the \emph{singular part} of $R$ at the pole $\zeta$. 
+
+Evidently, the partial fractions decomposition of a proper rational function expresses the function as the sum of its various singular parts, one for each pole. Therefore, every rational function is the sum of a polynomial and a bunch of singular parts, and in essentially only one way. The behavior of a rational function is thus somehow ``determined'' by its polynomial part and what happens near the poles.
+
+\section{Residues}
+We often need to compute the coefficients $A^{(j)}_s$ that appear in the various singular parts of a rational function. Saff and Snider give a general formula for them that appears on p.\ 106 in my copy. You need to practice finding these. Take it from me that if you are trying to decipher that formula under time pressure, you will be entering a world of pain.
+
+The most important instances of these coefficients are the coefficients of the terms $(z - z_j)^{-1}$, for each of the various poles $z_j$. These coefficients are so important that they have a special name. The coefficient of $(z - z_j)^{-1}$ is called the \emph{residue} of $R$ at the pole $z_j$. Most of the time, when you need to compute a coefficient from a partial fractions decomposition, it will be a residue. The residues of a rational function tell us a shocking amount of information about the function. It is almost embarrassing, as if the function forgot to log out of its favorite dating website.
+
+It is impossible to overstate the importance of the theory of residues to complex analysis. One eye-popping application is the evaluation of large families of particularly nasty integrals. For example, residue theory can be used to show that
+\begin{align*}
+  \int_0^{\infty} \frac{\log x}{x^3 + 1} \; dx &= \frac{-2\pi^2}{27},\, \text{and}\\
+  \int_0^{\infty} \frac{\log x}{x^3 - 1} \; dx &= \frac{4\pi^2}{27}.
+\end{align*}
+
+\section{Zeroes and Poles on the Riemann sphere}
+We began with a rational function $R$ that was undefined on the zero-set $Z(Q)$ of its denominator; that is, undefined at its poles. Using the extended plane $\CC$, we were able to extend $R$ over its poles. We now may regard $R$ as a function $\C \to \CC$. But this introduces another question of the same sort: just like the original domain of $R$ was $\C$ with some points missing, the new domain $\C$ is $\CC$ with a point missing! So annoying!
+
+If $\infty$ is a suitable \emph{value} for a function, it ought to be a suitable \emph{argument} as well. That is, if we are prepared to accept as legitimate equations of the form $R(\zeta) = \infty$, then we ought to give some thought to expressions like $R(\infty)$. Is there an obvious choice for this value? 
+
+We are free to define $R(\infty)$ in any way we like. But there is at most one choice that will make $R$ a continuous function on the whole extended plane $\CC$. Namely, we must let 
+\[
+  R(\infty) = \lim_{z \to \infty} R(z).
+\]
+It follows from the usual limit tricks that if $\deg{(P)} = \deg{(Q)}$, then $R(\infty)$ is the quotient of $P$'s leading coefficient by that of $Q$. If they are unequal, then we say that $R$ has a pole at $\infty$ of order $\deg{(P)} - \deg{(Q)}$ if $\deg{(P)} > \deg{(Q)}$. Finally, when $\deg{(P)} < \deg{(Q)}$, we say that $R$ has a zero at $\infty$ of order $\deg{(Q)} - \deg{(P)}$.
+
+\section{Conclusion}
+
+There is a very appealing and elegant symmetry between zeroes and poles, once we extend our perspective enough to regard rational functions as functions $\CC \to \CC$. Recall that we defined the degree of a rational function to be the degree of its numerator minus the degree of its denominator (interestingly, this definition still ``works'' even if we do not assume that the numerator and denominator have no factor in common).
+
+We knew before that ``degree of polynomial'' and ``number of zeroes of polynomial'' were equivalent, by the fundamental theorem of algebra. 
+
+\end{document} 

@@ -1,0 +1,175 @@
+\documentclass[twocolumn,12pt]{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[fontsize=12pt,baseline=14pt]{grid}
+\usepackage[top=5.5cm,
+ bottom=2.5cm,
+ left=2.5cm,
+ right=2.5cm,
+]{geometry}
+\usepackage{xparse}
+\usepackage{fourier}
+\usepackage{amsmath,amsthm,enumerate}
+%\input{commands}
+\usepackage{MnSymbol}
+\usepackage{gridleno}
+\usepackage{hyperref}
+\hypersetup{
+ colorlinks=true,
+ linkcolor=yotepurple,
+ citecolor=grlnblue,
+ urlcolor=grlngray}
+
+\usetikzlibrary{calc,decorations.markings}
+
+\NewDocumentCommand{\Z}{}{\mathbf{Z}}
+\NewDocumentCommand{\C}{}{\mathbf{C}}
+\NewDocumentCommand{\CC}{}{\widehat{\mathbf{C}}}
+\NewDocumentCommand{\R}{}{\mathbf{R}}
+\RenewDocumentCommand{\Re}{m}{\mathrm{Re}\;#1}
+\RenewDocumentCommand{\Im}{m}{\mathrm{Im}\;#1}
+%\NewDocumentCommand\arg{O{}}{\mathrm{arg}\;#1}
+%\DeclareMathOperator{\arg}{arg}
+\NewDocumentCommand\cis{O{}}{\mathrm{cis}\mkern2mu #1}
+\NewDocumentCommand\Arg{O{}}{\mathrm{Arg}\mkern1mu #1}
+\RenewDocumentCommand{\arg}{O{}O{}}{\mathrm{arg}_{#2}\mkern1mu #1}
+\NewDocumentCommand\conj{m}{\overline{#1}}
+%\DeclareMathOperator{\cis}{cis}
+%\DeclareMathOperator{\Arg}{Arg}
+\course{Complex Analysis}
+\courseid{431--01}
+\professor{Dave Rosoff}
+\term{Spring 2013}
+\topic{Cauchy's integral theorem and its consequences}
+\date{April 24, 2013 (Wed)}
+
+\begin{document}
+
+\makeheader
+
+\begin{summary}
+We have seen, due to the complex version of the FTC, that if the function $f$ is analytic ``inside'' the closed contour $\Gamma$, then $\int_{\Gamma} f \; dz$ vanishes. Cauchy's theorem is a stronger statement about the vanishing of contour integrals of analytic functions. We formulate some of the language of \emph{homotopy theory} in order to state and prove Cauchy's theorem.
+\end{summary}
+
+\section{Path independence}
+Last time, we stated the following theorem. It is a consequence of the parametrization technique for evaluating complex line integrals.
+\begin{Theorem}
+ Suppose the function $f$ is continuous in the domain $D$ and possesses an antiderivative $F$ throughout $D$. Then for every contour $\Gamma$ lying in $D$ with initial point $z_0$ and terminal point $z_1$, we have
+ \[
+ \int_{\Gamma} f(z) \; dz = F(z_1) - F(z_0).
+ \]
+\end{Theorem} 
+\begin{corollary}
+    If $f$ is continuous in a domain $D$ and has an antiderivative throughout $D$, then $\int_{\Gamma} f \; dz = 0$ for all loops $\Gamma$ lying in $D$.
+\end{corollary}
+Previously, we used parametrizations to show that 
+\[
+    \int_{C_r} (z - z_0)^n = \begin{cases}
+        0, & n \ne -1 \\
+        2\pi i, & n = -1
+    \end{cases},
+\]
+where $C_r$ is the circle of radius $r$ centered at $z_0$. The observant student will have noticed that these values do not depend on $r$. For $n \geq 0$, the calculation is a result of the corollary, since $(z - z_0)^n$ is then a polynomial (and therefore entire).
+
+For $n < -1$, the calculation is also a result of the corollary. This is counterintuitive, since the most obvious choice for $D$ is the circle $C_r$ together with the disk it bounds. Indeed, this doesn't work: the corollary cannot be applied with this $D$, because $(z - z_0)^n$ has a pole at $z_0$, hence does not have an antiderivative throughout the disk. 
+
+However, $D = \{ z \in \C : 0 < |z - z_0| \leq r \}$, the \emph{punctured disk} of radius $r$ centered at $z_0$, is a perfectly good domain. It is a connected open subset of the plane. Moreover, $(z-z_0)^n$ possesses an antiderivative throughout this punctured disk: the function 
+\[
+    F(z) = \frac{(z - z_0)^{n+1}}{n+1}
+\]
+is an example. Admittedly, $F$ has a pole at $z = z_0$, but since $z_0 \not\in D$, this presents no difficulty.
+
+The case $n = -1$ remains. Our study of the logarithm ``function'' should convince you that, since $\log{(z - z_0)}$ has a branch point at $z_0$, there is no branch of $\log{(z-z_0)}$ that is continuous throughout $D$, even when we remove the branch point from $D$. That is why the integral of $(z - z_0)^{-1}$ has a nonzero value, and why $-1$ is different from all other integer exponents.
+
+\section{Three equivalent conditions}
+The notions of possessing an antiderivative and path independence are very closely related. The following theorem says that in fact, they are the same.
+\begin{Theorem}
+    Let $f$ be continuous in the domain $D$. Then the following are equivalent:
+    \begin{enumerate}[(i)]
+        \item $f$ has an antiderivative in $D$. \label{it:fantider}
+        \item Every loop integral of $f$ in $D$ vanishes. \label{it:loopsvan}
+        \item The contour integrals of $f$ in $D$ are path-independent. \label{it:pathind}
+    \end{enumerate}
+\end{Theorem}
+Be sure you understand the logical structure of the statement of this theorem. It says that if $f$ meets the hypothesis (continuity in a domain), then the three conclusions hold or fail together---all or nothing. Hence, if $f$ is \emph{known} to have an antiderivative throughout $D$, then \emph{every} loop integral of $f$ in $D$ vanishes, while if even a single loop integral fails to vanish, then there is no function $F$, analytic in $D$, whose derivative is $f$.
+\begin{proof}
+    We have already proved that (\ref{it:fantider}) implies (\ref{it:loopsvan}) . It is enough to show, therefore, that (\ref{it:loopsvan}) implies (\ref{it:pathind}) and that (\ref{it:pathind}) implies (\ref{it:fantider}).
+
+    To see that (\ref{it:loopsvan}) implies (\ref{it:pathind}), one pastes the two coterminous paths together into a closed loop. Additivity of integrals finishes the argument.
+
+    The difficult part is to show that  (\ref{it:pathind}) implies (\ref{it:fantider}). The details are essential, but they appear in Saff and Snider, so I will not reproduce them here. 
+\end{proof}
+\section{Cauchy's theorem}
+What the textbook calls \emph{continuous deformations} are what a topologist calls \emph{homotopies}. Homotopy is a formal way of describing exactly what we mean when we talk about bending or stretching one curve into another within some region $D$. You should read 4.4a before continuing here; pay attention to the pictures and try to visualize the various homotopies (deformations). Definition 5 in the text is thoroughly legit. It tells us how to connect the two loops we are trying to deform: through a continuous family of intermediate curves, each of which is a loop in $D$. 
+\begin{definition}
+    Let $\Gamma_0$ and $\Gamma_1$ be two curves, both lying in some domain $D$, with parametrizations $z_0(t)$ and $z_1(t)$, $a \leq t \leq b$. A \emph{homotopy in $D$} from $\Gamma_0$ to $\Gamma_1$ is a family of parametrized curves $z(s,t)$, $0 \leq s \leq 1$, satisfying
+    \begin{enumerate}[(i)]
+        \item For each fixed $s$, $z(s,t)$ is a parametrized curve lying in $D$.
+        \item For all $t$, $z(0,t) = z_0(t)$ and $z(1,t) = z_1(t)$.
+    \end{enumerate}
+\end{definition}
+We are most interested in the case where $\Gamma_0$ and $\Gamma_1$ in the definition are loops; that is, the case in which $z_0(0) = z_0(1)$ and $z_1(0) = z_1(1)$. In this case, we add another condition to the definition of homotopy in $D$.
+\begin{definition}
+    If $\Gamma_0$ and $\Gamma_1$ are loops in the domain $D$, we say they are homotopic \emph{as loops in $D$} provided that they are homotopic in $D$ and that for each $s \in [0,1]$, $z(s,0) = z(s,1)$, so that each ``stage''  of the homotopy is a loop in $D$.
+\end{definition}
+The definition thus ensures that we don't unloop our loops as we deform\footnote{It's not in dictionaries yet, but the verb ``homotope'' is increasingly common.} them one into another.
+
+Once again we have a parametrization. We have made the points of the unit interval $0 \leq s \leq 1$ correspond to our family of curves. That is the essence and ultimate nature of parametrization. 
+
+Mostly, it is OK to have an intuitive understanding of when two curves are homotopic. This is because we usually do not need to construct the homotopy as an explicit formula. Knowing it exists is enough.
+\begin{definition}
+    If $D$ is a domain with the property that every loop in $D$ is homotopic  to a constant loop, then we say $D$ is \emph{simply connected}.
+\end{definition}
+For example, a slit plane is simply connected, but a punctured plane is not. It is intuitively clear that this is true, but proving such statements as these can be quite technically challenging. 
+
+The significance of simple connectivity is made manifest by the following koan.
+\begin{koan}
+Curves are $1$-dimensional numbers. Points are $0$-dimensional numbers. If two points live in a connected domain, then there is a curve connecting them. If two curves live in a simply connected domain, then there is a homotopy connecting them. So we have an analogy: homotopies are to curves as curves are to points. I guess that means homotopies are $1$-dimensional numbers, but between $1$-dimensional numbers, so\ldots
+
+Are homotopies $2$-dimensional numbers? Are there higher-dimensional numbers? What connects them? 
+\end{koan}
+\begin{Theorem} \label{thm:htpyinv}
+    Let $D$ be a domain containing loops $\Gamma_0$ and $\Gamma_1$ that are homotopic as loops in $D$. Then for every function $f$ that is analytic in $D$,
+    \[
+        \int_{\Gamma_0} f \; dz = \int_{\Gamma_1} f \; dz.
+    \]
+\end{Theorem}
+This theorem is hard to prove rigorously in complete generality, but we can effect a proof in the case when $\Gamma_0$ and $\Gamma_1$ are \emph{smooth} curves and the homotopies involved are also smooth (actually, we only need them of class $\mathcal{C}^2$, but who cares?). The situation is analogous to that of the Jordan Curve Theorem, which we take for granted.
+
+The Jordan Curve Theorem is universally described as ``difficult''. For smooth curves, its proof is not so hard as is sometimes implied in books\footnote{It is indeed very difficult to prove for curves that are merely continuous. This is because such curves may have infinite length, no length at all, or actually have positive \emph{area}.}, but it is still more topologically demanding than we need to be. The situation is similar for Theorem~\ref{thm:htpyinv}. We also make another assumption, which it turns out is completely harmless: that $f'(z)$ is continuous when $f$ is analytic\footnote{Goursat's Theorem, which we may have time to prove, shows that analytic functions have derivatives that are themselves analytic.}.
+
+\begin{proof}[Proof of Theorem~\ref{thm:htpyinv}]
+    We assume that $\Gamma_0$ and $\Gamma_1$ are homotopic with homotopy $z(s,t)$ and that $z(s,t)$ has ``enough'' partial derivatives. By definition, for each $s \in [0,1]$, the function $z(s,t)$ parametrizes a loop in $D$ that we shall call $\Gamma_s$. Let $I(s)$ give the integral of $f$ around this loop:
+    \[
+        I(s) = \int_{\Gamma_s} f \; dz = \int_0^1 f(z(s,t)) \frac{\partial z}{\partial t} \; dt.
+    \]
+    Here we have used the usual method of computing line integrals: via parametrizations. We now compute $I'(s)$. By all our smoothness assumptions, the integrand above is of class $\mathcal{C}^1$, and hence we are permitted to interchange the order of differentiation and integration:
+    \begin{equation*}
+        \frac{dI}{ds} = \int_0^1 \left(f'(z(s,t)) \frac{\partial z}{\partial s} \frac{\partial z}{\partial t} + f(z(s,t)) \frac{\partial^2 z}{\partial s \partial t} \right) \; dt.
+    \end{equation*}
+    On the other hand, we can compute another derivative as follows:
+    \[
+        \frac{\partial}{\partial t} \left( f(z(s,t)) \frac{\partial z}{\partial s} \right) = f'(z(s,t)) \frac{\partial z}{\partial t} \frac{\partial z}{\partial s} + f(z(s,t)) \frac{\partial^2 z}{\partial t \partial s}.
+    \]
+    The continuity assumptions guarantee that the mixed partials are equal, so we have proved that $dI/ds = f(z(s,1)) \frac{\partial z}{\partial s}(s,1) - f(z(s,0)) \frac{\partial z}{\partial s}(s,0)$.
+
+    But $\Gamma_s$ is a loop, so this is zero. Therefore $I(s)$ is a constant, and we deduce that $I(0) = I(1)$ since the domain of $I$ is an interval and hence connected.
+\end{proof}
+Cauchy's Theorem is an immediate consequence.
+\begin{Theorem}
+    If $D$ is a simply connected domain and $f$ is analytic in $D$, then $\int_{\Gamma} f \; dz$ vanishes for all loops $\Gamma$ in $D$.
+\end{Theorem}
+Putting it all together, we obtain the following omnibus theorem.
+\begin{Theorem}
+    In a simply connected domain, all analytic functions have antiderivatives, all contour integrals of such functions are path-independent, and all loop integrals of such functions vanish.
+\end{Theorem}
+% \begin{Theorem}
+%     Let $\gamma$ be a simple closed curve (so, in particular, $\gamma$ admits a smooth parametrization, and this parametrization is injective as a complex-valued function). Then the complement of $\gamma$ in $\CC$ is the union of two disjoint domains, one of which contains $\infty$. 
+% \end{Theorem}
+% This is the celebrated Jordan Curve Theorem. 
+% \section{Exercises}
+% \begin{exenumerate}
+%  \item Meh meh
+% \end{exenumerate}
+\end{document} 

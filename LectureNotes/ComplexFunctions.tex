@@ -1,0 +1,232 @@
+\documentclass[twocolumn,12pt]{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[fontsize=12pt,baseline=14pt]{grid}
+\usepackage[top=5.5cm,
+  bottom=2.5cm,
+  left=2.5cm,
+  right=2.5cm,
+]{geometry}
+\usepackage{xparse}
+\usepackage[all]{xy}
+\usepackage{paralist}
+\usepackage{fourier}
+\usepackage{amsmath,amsthm}
+\usepackage{amssymb,latexsym}
+%\input{commands}
+\usepackage{MnSymbol}
+\usepackage{gridleno}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=yotepurple,
+  citecolor=grlnblue,
+  urlcolor=grlngray}
+
+\usetikzlibrary{calc,decorations.markings}
+
+\NewDocumentCommand{\Z}{}{\mathbf{Z}}
+\NewDocumentCommand{\C}{}{\mathbf{C}}
+\NewDocumentCommand{\R}{}{\mathbf{R}}
+\NewDocumentCommand{\N}{}{\Z_{\geq 0}}
+\NewDocumentCommand{\eps}{}{\varepsilon}
+\RenewDocumentCommand{\Re}{m}{\mathrm{Re}\;#1}
+\RenewDocumentCommand{\Im}{m}{\mathrm{Im}\;#1}
+%\NewDocumentCommand\arg{O{}}{\mathrm{arg}\;#1}
+%\DeclareMathOperator{\arg}{arg}
+\NewDocumentCommand\cis{O{}}{\mathrm{cis}\mkern2mu #1}
+\NewDocumentCommand\Arg{O{}}{\mathrm{Arg}\mkern1mu #1}
+\RenewDocumentCommand{\arg}{O{}O{}}{\mathrm{arg}_{#2}\mkern1mu #1}
+\NewDocumentCommand\conj{m}{\overline{#1}}
+%\DeclareMathOperator{\cis}{cis}
+%\DeclareMathOperator{\Arg}{Arg}
+\course{Complex Analysis}
+\courseid{431-01}
+\professor{Dave Rosoff}
+\term{Spring 2013}
+\topic{Complex Functions}
+\date{March 1, 2013 (Fri)}
+
+
+\begin{document}
+
+\makeheader
+
+\begin{summary}
+We begin the discussion of what it means to differentiate a function with respect to the complex variable~$z$. Since a complex function can be thought of as a pair of real-valued functions on the 2-dimensional real vector space~$\C \simeq \R^2$, we naturally wish to explore the relationship between these concepts. The definition of limits and continuity proceeds in a way exactly analogous to ordinary calculus. We will see in the next section that differentiability is different.
+\end{summary}
+
+\section{Functions of a complex variable}
+Let us give a somewhat different definition of \emph{function} than do Saff and Snider.
+\begin{definition}
+  If~$A$ and~$B$ are sets, a function~$f$ from~$A$ to~$B$ is a subset of~$A \times B$ with the property specified below. Notice that since~$f$ is a subset of~$A \times B$, it has elements, and these elements have the general form of ordered pairs.
+  
+  The property that~$f$ must enjoy in order to be a function is: each element of~$A$ occurs once and only once as the first coordinate of an element of~$f$.
+
+  If~$f$ is a function from~$A$ to~$B$ in this sense, we say that~$A$ is the \emph{domain} of~$f$ and that~$B$ is the \emph{codomain}\footnote{We avoid the word \emph{range} because it is used by different authors to mean different things; sometimes the codomain as defined above and sometimes the \emph{image}, defined elsewhere.} of~$f$.
+\end{definition}
+The reader can see that every function of this sort corresponds to our usual notion of function, via the correspondence
+\[
+  (a, b) \in f \quad \text{if and only if} \quad f(a) = b.
+\]
+ 
+The defining property of functions amounts to the requirements
+\begin{inparaenum}[(a)]
+  \item that the domain of~$f$ coincide with~$A$ (i.e., it is not some smaller set) and
+  \item that no argument (input) be~$f$-related to more than one value.
+\end{inparaenum}
+
+Admittedly, you might find this to be quite an abstract way to look at functions. We are more accustomed to the notion of a \emph{rule} that assigns to every element~$a \in A$ an element~$f(a) \in B$. We continue to write~$f \colon A \to B$ and for the most part, we do think of functions as ``rules''. But this formulation has some advantages. For one, what we are calling the function~$f \colon A \to B$ is more properly called its graph. For another, we have the next proposition.
+\begin{proposition}
+  Let~$f \colon A \to B$ be a function. Then the following are equivalent.
+  \begin{enumerate}
+    \item The function~$f$ is injective (i.e., one-to-one).
+    \item No~$b \in B$ occurs as the second coordinate of more than one element of~$f$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  Left to the reader.
+\end{proof}
+In the exercises at the end of the section, the reader is invited to formulate and prove a similar proposition regarding surjective (i.e., onto) functions.
+
+As in calculus, we sometimes can permit ourselves a bit of vagueness regarding the domain of a function that is defined by an algebraic formula, especially for rational functions (quotients of polynomials). The example given in the text is paradigmatic (page 53). For the present discussion, you can think of the special case~$A = B = \C$. The domain of a complex function will usually be a domain in the sense of section~1.6 of Saff and Snider. 
+
+Also as in calculus, it is convenient to have a second variable to denote the values of the function~$f$. In complex analysis, it is often~$w$, so that we write
+\[
+  w = f(z).
+\]
+Since~$w \in \C$, it has real and imaginary parts. We frequently write these \emph{real-valued functions} in the following way, writing~$z = x + iy$ as usual:
+\begin{align*}
+  u &= u(x, y) = \Re{w} = \Re{f(z)} \\
+  v &= v(x, y) = \Im{w} = \Im{f(z)}.
+\end{align*}
+It is perfectly reasonable to suppose that the differentiability of~$w$ should be equivalent to the differentiability of~$u$ and~$v$ as function~$\R^2 \to \R$, but this turns out not to be the most interesting idea. Note that it would be perfectly sensible to write something like~$f(x, y)$ for a complex function~$f$ given our conventions, but we never do; the reasons for this have to do with the nature of complex differentiability and will be made clear shortly.
+
+\section{Limits and continuity}
+\subsection{Sequences and sequence arithmetic}
+\begin{definition}
+  A \emph{sequence} is a function whose domain is the natural numbers~$\N = \{0, 1, 2, 3, \ldots\}$.
+\end{definition}
+Contrary to usual convention, we prefer letters toward the beginning of the alphabet for sequences. If~$a$ is a sequence, we abbreviate the value~$a(n)$ as~$a_n$ and refer to it as the~$n$th term of~$a$.
+
+We think of the set of all complex sequences as an arithmetic realm that in some ways is very like~$\C$. One notation for this set would be~$\C^{\N}$, but this is rather cumbersome, so let us refer to it as~$S$. We won't have too many occasions to refer to it directly anyway. 
+
+There is a copy of~$\C$ living inside~$S$. To be really precise there are a great many such copies, but there is one \emph{natural} copy, given by the constant sequences.
+\begin{definition}
+  If~$z_0$ is a complex number, the constant sequence at~$z_0$ is the unique sequence all of whose terms are~$z_0$.
+\end{definition}
+We identify each element of~$\C$ with its constant sequence and so obtain a function~$\C \to S$. This function sends each complex number to the constant sequence it generates. Such functions are often called ``embeddings''. The idea is that the function doesn't do anything to the number, just ``embeds'' it in the bigger set~$S$. This is why some people like to use the word ``copy'' in this context.
+
+The set~$S$ of sequences inherits operations from~$\C$ in a nice way. 
+\begin{definition}
+  Let~$a$ and~$b \in S$. Then~$a + b$ is an element of~$S$ defined by addition of functions: that is,
+  \[
+    (a + b)_n = (a + b)(n) = a(n) + b(n) = a_n + b_n.
+  \]
+\end{definition}
+The reader is invited to formulate appropriate definitions for subtraction, multiplication, and division (with appropriate warnings) and to check for herself that these operations obey all the usual rules.
+\subsection{Limits and continuity}
+\begin{definition}
+  Let~$a$ be a sequence of complex numbers (that is, $a \colon \N \to \C$). We say that~$a$ is a \emph{null sequence} provided that for every~$\eps > 0$, there exists~$N$ such that~$|a(n)| < \eps$ whenever~$n > N$.
+\end{definition}
+\begin{definition}
+  Let~$a$ be a sequence of complex numbers and let~$z_0 \in \C$. We say that~$a$ converges to~$z_0$, often written~$a_n \to z_0$, if the sequence~$a - z_0$ is null\footnote{Referring to the constant sequence~$(z_0, z_0, z_0, \ldots$ with the same name as the complex number~$z_0$ is called ``abuse of notation''. It is not technically proper but is unlikely to cause confusion. Since it is also efficient, we indulge in it as needed.}. We also say that~$z_0$ is the limit of the sequence~$a$ in this case.
+\end{definition}
+\begin{definition}
+  Let~$a$ be a sequence of complex numbers. We say that~$a$ is convergent if there exists~$z_0 \in \C$ with~$a_n \to z_0$. 
+\end{definition}
+In case you are wondering, this definition is a great reason to choose the constant sequences as the target of our embedding~$\C \to S$ (as opposed to, say, the sequences with only the initial term nonzero).
+\begin{Theorem}
+  Let~$a$ be a sequence of complex numbers. Suppose in addition that the difference sequence~$a_{n+1} - a_{n}$ is null, that is, suppose that
+  \[
+    a_{n+1} - a_n \to 0.
+  \]
+  Then~$a$ is convergent.
+\end{Theorem}
+The proof of this theorem is beyond the scope of these notes; it follows from the corresponding property of the real numbers and any proof of it relies on the Axiom of Choice. Sequences with the property described in the Theorem are often called ``Cauchy sequences'', but since we are only interested in sequences in~$\C$, we will not need to make any further distinction between Cauchy and convergent sequences.
+
+There is a much nicer characterization of null sequences and convergent sequences using topological language. By a \emph{neighborhood} of~$z_0 \in \C$ we mean any open set containing~$z_0$. This is quite general, but you can picture the neighborhoods as open disks. 
+\begin{proposition}
+  Let~$a$ be a sequence. Then~$a$ is null if and only if for each neighborhood~$U$ of~$0$, $a_n \in U$ for all but finitely many~$n \in \N$.
+\end{proposition}
+The phrase ``all but finitely many'' is frequently abbreviated ``almost all'', and means in this context that the sequence is \emph{eventually} contained entirely in~$U$. If we wait long enough, in other words, the sequence will stay in~$U$ permanently.
+\begin{proof}
+  Suppose first that~$a$ is null. Then by definition, we have the conclusion of the proposition for open disks centered at~$0$. Now let~$U$ be any neighborhood of~$0$. By definition, there is an open disk centered at~$0$, of radius say~$\eps$, contained entirely inside~$U$. Since~$a$ is null, there is~$N$ such that~$n > N$ implies~$a_n \in B(0, \eps) \subseteq U$. Thus only the~$a_n$ with~$n \leq N$ have a chance to be outside~$U$, and this proves one implication.
+
+  For the other implication, we simply note that the condition entails in particular that almost all~$a_n$ lie in each~$B(0, \eps)$. This is the definition of a null sequence, and the proof is complete.
+\end{proof}
+You should formulate and prove an analogous statement about sequences that converge to points other than~$0$.
+\begin{Theorem}
+  If~$a$ is a convergent sequence of complex numbers, then its limit is unique.
+\end{Theorem}
+Once again, the proof relies on deep properties of the real numbers and to give it would be an inexcusable digression. This theorem justifies writing~$\lim a = z_0$ when~$a \to z_0$; the limit of a convergent sequence is unambiguously determined by the sequence.
+\begin{koan}
+  You may be surprised by the notation~$\lim a$, having expected to see something like
+  \[
+    \lim_{n \to \infty} a_n.
+  \]
+  Do we really need to distinguish this from any other limit of the sequence~$a_n$?
+\end{koan}
+
+Let us define the subset~$S_0$ of~$S$ by saying it contains exactly those sequences which have limits: that is, $S_0$ is the set of sequences of convergent complex numbers. Because limits of sequences are unique, the association of each convergent sequence to its limit defines a \emph{function}
+\[
+  S_0 \to \C.
+\]
+Since each constant sequence~$z_0$ is convergent (you should prove this), we are free to regard our earlier embedding~$\C \to S$ as an embedding that takes values in the smaller set~$S_0$. Since the limit of a constant sequence is the constant value (you should prove this, too), the composite function
+\[
+\xymatrix{
+    \C \ar[r] & S_0 \ar[r] & \C \\
+    %z_0 \ar@{|->}[r] & (z_0, \ldots) \ar@{|->}[r] & z_0 \\
+  }
+\]
+is the identity function on~$\C$! It is this fact that distinguishes the copy of~$\C$ coming from the constant sequences from the rest. The constant sequences are \emph{convergent} and they remember where they came from (unlike the sequences, say, $(z_0, 0, 0, 0, \ldots)$). We bring these up to state the following omnibus proposition about how limits interact with sequence arithmetic.
+\begin{proposition}
+  Let~$a$ and~$b$ be convergent sequences. 
+  \begin{enumerate}
+    \item The sequence~$a + b$ is also convergent, and~$\lim (a + b) = \lim a + \lim b$.
+    \item The sequence~$a - b$ is also convergent, and~$\lim (a - b) = \lim a - \lim b$.
+    \item The sequence~$a b$ is also convergent, and~$\lim (a  b) = \lim a  \lim b$.
+    \item If~$\lim b \ne 0$, the sequence~$a / b$ is also convergent\footnote{This part of the proposition still has some problems. Identify them and reformulate or refine the proposition appropriately.}, and~$\lim (a / b) = \lim a / \lim b$. 
+  \end{enumerate}
+\end{proposition}
+
+One way to define convergence of functions is the following.
+\begin{definition}
+  Let~$f$ be a function defined in a neighborhood of~$z_0$, except possibly at~$z_0$ itself. If~$w$ is some complex number such that for every convergent sequence~$a$ with limit~$z_0$, we have~$f(a_n) \to w$, we say that the limit of~$f$ at~$z_0$ exists and is equal to~$w$, and we write
+  \[
+    \lim_{z \to z_0} f(z) = w.
+  \]
+\end{definition}
+This definition captures the essence of our intuition of what limits are like. Unfortunately, it is impossible to use this definition to prove that any function has a limit, except in the most trivial of cases---there are too many sequences to check. Therefore, we work with the following definition, which you will no doubt remember from your first rigorous calculus course. It is phrased as a proposition, since we have already defined the notion in question. Their equivalence is not obvious and should be proved.
+\begin{proposition}
+  Let~$f$ be a function defined in a neighborhood of~$z_0$, except possibly at~$z_0$ itself. If~$w$ is some complex number such that, for every~$\eps > 0$ there exists~$\delta > 0$ such that~$|f(z) - w| < \eps$ whenever~$0 < |z - z_0| < \delta$, then~$\lim_{z\to z_0} f(z) = w$. The converse is also true.
+\end{proposition}
+\begin{proof}
+  Left to the reader, as a wonderfully instructive exercise you should totally do.
+\end{proof}
+The usual limit laws are proved in the same way as in ordinary calculus.
+% \begin{Theorem}
+%   Let~$f$ and~$g$ be functions and suppose that
+%   \[
+%     \lim_{z \to z_0} f(z) \text{ and } \lim_{z \to z_0} g(z) \text{ exist.}
+%   \]
+%   \begin{enumerate}
+%     \item~$\lim_{z\to z_0} (f+g)(z) = \lim_{z\to z_0} f(z) + \lim_{z\to z_0} g(z)$
+%     \item~$\lim_{z\to z_0} (f-g)(z) = \lim_{z\to z_0} f(z) - \lim_{z\to z_0} g(z)$.
+%     \item~$\lim_{z\to z_0} (fg)(z) = \lim_{z\to z_0} f(z) \lim_{z\to z_0}  g(z)$.
+%     \item~$\lim_{z\to z_0} (f/g)(z) = \lim_{z\to z_0} f(z) / \lim_{z\to z_0} g(z)$, provided that~$\lim_{z \to z_0} g(z) \ne 0$.
+%   \end{enumerate}
+% \end{Theorem}
+\begin{definition}
+  Let~$f$ be a function defined in a neighborhood of~$z_0$. We say that~$f$ is continuous at~$z_0$ provided that
+  \[
+    \lim_{z\to z_0} f(z) = f(z_0).
+  \]
+  If~$U$ is an open set, we say that~$f$ is continuous on~$U$ if it is continuous at every~$z_0 \in U$.
+\end{definition}
+\begin{koan}
+  Why do we define limit and continuity only ``on a neighborhood'' of some point?
+\end{koan}
+It is not hard to prove that polynomials are continuous everywhere; that rational functions are continuous on their domains; that the exponential function is continuous everywhere; that the functions~$\Re{}$ and~$\Im{}$ are continuous as real-valued function of vectors in~$\R^2$; and so on. As in calculus, elementary functions are continuous everywhere they are defined. For functions like square root and argument, we have seen that defining them can be tricky; but once we have defined them, they are continuous.
+\end{document}

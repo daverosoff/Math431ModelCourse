@@ -1,0 +1,149 @@
+\documentclass[twocolumn,12pt]{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[fontsize=12pt,baseline=14pt]{grid}
+\usepackage[top=5.5cm,
+  bottom=2.5cm,
+  left=2.5cm,
+  right=2.5cm,
+]{geometry}
+\usepackage{xparse}
+\usepackage{fourier}
+\usepackage{amsmath,amsthm}
+\usepackage{amssymb,latexsym}
+%\input{commands}
+\usepackage{MnSymbol}
+\usepackage{gridleno}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=yotepurple,
+  citecolor=grlnblue,
+  urlcolor=grlngray}
+
+\usetikzlibrary{calc,decorations.markings}
+
+\NewDocumentCommand{\Z}{}{\mathbf{Z}}
+\NewDocumentCommand{\C}{}{\mathbf{C}}
+\NewDocumentCommand{\R}{}{\mathbf{R}}
+\RenewDocumentCommand{\Re}{m}{\mathrm{Re}\;#1}
+\RenewDocumentCommand{\Im}{m}{\mathrm{Im}\;#1}
+%\NewDocumentCommand\arg{O{}}{\mathrm{arg}\;#1}
+%\DeclareMathOperator{\arg}{arg}
+\NewDocumentCommand\cis{O{}}{\mathrm{cis}\mkern2mu #1}
+\NewDocumentCommand\Arg{O{}}{\mathrm{Arg}\mkern1mu #1}
+\RenewDocumentCommand{\arg}{O{}O{}}{\mathrm{arg}_{#2}\mkern1mu #1}
+\NewDocumentCommand\conj{m}{\overline{#1}}
+%\DeclareMathOperator{\cis}{cis}
+%\DeclareMathOperator{\Arg}{Arg}
+\course{Complex Analysis}
+\courseid{431-01}
+\professor{Dave Rosoff}
+\term{Spring 2013}
+\topic{Let's talk about \\ exp, baby}
+\date{February 15, 2013 (Fri)}
+
+
+\begin{document}
+
+\makeheader
+
+\begin{summary}
+We introduce the complex exponential function and derive Euler's Formula.
+\end{summary}
+
+\section{Recap}
+Last time, we introduced the complex operations of \emph{absolute value}, \emph{conjugation}, and \emph{argument}, and spent a fair amount of time discussing the complications arising from the ambiguity of the argument. We developed the idea of branch cuts and branch points. The other main topic of discussion was the geometric interpretation of multiplication, summarized in the following polar equation:
+\[
+  (r_1 \cis{\theta_1})(r_2 \cis{\theta_2}) = r_1 r_2 \cis{(\theta_1 + \theta_2)}
+\]
+
+\section{The exponential function}
+There is a surprising number of different ways to define the exponential function of elementary calculus, and in particular, the number $e$ on which it is based\footnote{It is popularly understood that $e$ is named for Leonhard Euler.}. I call it \emph{the} exponential function with deliberate care. We wish to extend the exponential function so that it is defined for any complex number. 
+
+As before, there is a philosophy behind how to do this ``correctly''. We could of course adopt the following definition, using the standard (rectangular) form:
+\begin{equation}
+    \tag{Stupid}
+    e^{x+iy} = \begin{cases}
+        e^x & \text{if $y = 0$,} \\
+        0   & \text{if $t \ne 0$}.
+    \end{cases}
+    \label{eq:zeroext}
+\end{equation}
+Equation~\eqref{eq:zeroext} is a perfectly valid extension of the exponential function to the complex plane. But it is not a very good one. The best thing about the exponential function is that it is its own derivative. The second best thing about the exponential function is that it converts addition into multiplication. Equation~\eqref{eq:zeroext} does neither. We need to use a different approach, guided by our philosophy that anyone who joins the game needs to play by the existing rules. We'll get a chance to do what is best in mathematics: making two things that seem different actually be the same. 
+
+We state the following theorem without proof. A proof may be found in any elementary text on differential equations.
+\begin{theorem}
+  Let $(t_0, y_0)$ be any point in the plane and suppose that $p(t)$ and $g(t)$ are continuously differentiable in a neighborhood $U$ of $t_0$. The first-order linear initial value problem
+  \[
+    y' + p(t)y = g(t), \quad y(t_0) = y_0
+  \]
+  has a unique solution defined throughout $U$.
+\end{theorem}
+It follows from the theorem that the exponential function $exp(t) = e^t$ is characterized uniquely by the properties
+\[
+  \frac{d}{dt} exp(t) = exp(t), \quad exp(0) = 1.
+\]
+We now show that the addition theorem is a consequence of this characterization and the quotient rule for derivatives.
+\begin{theorem} \label{thm:characterizationofexp}
+  For all numbers $z$ and $w$, we have
+  \[
+    e^{z+w} = e^z e^w.
+  \]
+\end{theorem}
+\begin{proof}
+  The proof is informal, since we do not have a rigorous definition of complex differentiation. But whatever it is, our philosophy assures us that it will obey the familiar Rules: namely, the Chain Rule and the Quotient Rule. For example, we observe that
+  \begin{displaymath}
+    \frac{d}{dz} e^{z+w} = e^{z+w}
+  \end{displaymath}
+  via an application of the Chain Rule.
+  
+  Now let us compute the $z$-derivative of $e^{z+w}/e^z$, using the Quotient Rule together with the last displayed computation.
+  \begin{align*}
+    \frac{d}{dz} \frac{e^{z+w}}{e^z} 
+      &= \frac{e^z e^{z+w} - e^{z+w}e^z}{e^{2z}} \\
+      &= 0.
+  \end{align*}
+  Notice we make essential use of the fact that $e^z$ is its own $z$-derivative. 
+
+  Evidently, $e^{z+w}/e^z$ is a constant function of $z$ for each fixed $w$. That is, the value of $e^{z+w}/e^z$ depends only on $w$, and we are free to define $E(w) = e^{z+w}/e^z$. Moreover, the calculation above shows that it does not matter which $z$ we use to compute $E(w)$. Putting $z = 0$, we find that
+  \[
+    E(w) = \frac{e^{w}}{e^0} = e^w, \quad \text{since $e^0 = 1$}.
+  \]
+  We have now shown that $e^{z+w}/e^z = e^w$, and hence proved the addition theorem for the exponential function.
+\end{proof}
+This is not strictly necessary for what we are doing, but it is very cool to know that the property of exp that is useful for calculus gives us, for free, the addition property.
+
+Evidently, we have
+\begin{align*}
+  \frac{d}{dt} e^{it} &= ie^{it} \\
+  \frac{d^2}{dt^2} e^{it} &= i^2 e^{it} \\
+    &= -e^{it}
+\end{align*}
+A similar argument from the existence and uniqueness theorems for \emph{second-order} linear initial value problems (the initial conditions are $e^{i0} = 1$ and $ie^{i0} = i$) tells us that there is exactly one function satisfying 
+\begin{align*}
+g''(t) &= -g(t), \\
+g(0)   &= 1, \\
+g'(0)  &= i.
+\end{align*}
+Hence $g(t) = e^{it}$, since both functions satisfy the conditions. It is known that all functions satisfying $g''(t) = -g(t)$ are of the form
+\[
+  g(t) = A \cos t + B \sin t.
+\]
+Two clever evaluations determine $A = 1$, $B = i$, and deliver to us one of the most celebrated equations ever written in more than seventy centuries of mathematical thought.
+\[ 
+    \boxed{e^{it} = \cos t + i \sin t}
+\]
+This is one of many beautiful equations known as \emph{Euler's Formula}\footnote{We have proved Euler's Formula for real values of $t$ only. You will prove later that it holds also for complex values.}. Respect.
+%
+\section{Consequences of Euler's Formula}
+Complex numbers of the form $e^{it}$ are known as \emph{unit complex numbers}, because of the following fact.
+\begin{proposition}
+  For all real $t$, $|e^{it}| = 1$.
+\end{proposition}
+\begin{proof}
+  Left to the reader.
+\end{proof}
+
+\end{document} 

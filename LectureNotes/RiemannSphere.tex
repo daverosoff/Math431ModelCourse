@@ -1,0 +1,109 @@
+\documentclass[twocolumn,12pt]{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[fontsize=12pt,baseline=14pt]{grid}
+\usepackage[top=5.5cm,
+  bottom=2.5cm,
+  left=2.5cm,
+  right=2.5cm,
+]{geometry}
+\usepackage{xparse}
+\usepackage{fourier}
+\usepackage{amsmath,amsthm}
+\usepackage{amssymb,latexsym}
+%\input{commands}
+\usepackage{MnSymbol}
+\usepackage{gridleno}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=yotepurple,
+  citecolor=grlnblue,
+  urlcolor=grlngray}
+
+\usetikzlibrary{calc,decorations.markings}
+
+\NewDocumentCommand{\Z}{}{\mathbf{Z}}
+\NewDocumentCommand{\C}{}{\mathbf{C}}
+\NewDocumentCommand{\R}{}{\mathbf{R}}
+\RenewDocumentCommand{\Re}{m}{\mathrm{Re}\;#1}
+\RenewDocumentCommand{\Im}{m}{\mathrm{Im}\;#1}
+%\NewDocumentCommand\arg{O{}}{\mathrm{arg}\;#1}
+%\DeclareMathOperator{\arg}{arg}
+\NewDocumentCommand\cis{O{}}{\mathrm{cis}\mkern2mu #1}
+\NewDocumentCommand\Arg{O{}}{\mathrm{Arg}\mkern1mu #1}
+\RenewDocumentCommand{\arg}{O{}O{}}{\mathrm{arg}_{#2}\mkern1mu #1}
+\NewDocumentCommand\conj{m}{\overline{#1}}
+%\DeclareMathOperator{\cis}{cis}
+%\DeclareMathOperator{\Arg}{Arg}
+\course{Complex Analysis}
+\courseid{431-01}
+\professor{Dave Rosoff}
+\term{Spring 2013}
+\topic{The Riemann sphere}
+\date{February 22, 2013 (Fri)}
+
+
+\begin{document}
+
+\makeheader
+
+\begin{summary}
+The complex plane can be regarded as a subset of a surprising space: the unit sphere. In fact, we only have to add one point, called $\infty$. We develop the theory of the Riemann sphere including the chordal metric and the convergence of some sequences that do not converge in the plane.
+\end{summary}
+
+\section{The stereographic projection}
+Recall that the \emph{unit sphere} in $\R^3$ is the set
+\[
+    \{ (x_1, x_2, x_3) \in \R^3 : x_1^2 + x_2^2 + x_3^2 = 1 \}.
+\]
+We are going to construct mutually inverse mappings\footnote{As mentioned in class, the words ``mapping'' and ``function'' are technically synonymous. The word ``mapping'' is more evocative of a geometric transformation.} between the plane $\C$ and this set (well, almost). The mapping from $\C$ to the sphere is called \emph{stereographic projection}. It will be easiest if you follow along in your textbook since I do not have time to produce figures for this document. Or, you can draw pictures yourself as you go.
+
+To picture the stereographic projection, it is easiest to begin by drawing the unit sphere and its equator (the circle $x_1^2 + x_2^2 = 1$, $x_3 = 0$). Draw a part of the $(x_1,x_2)$-plane as well. We will identify the $(x_1,x_2)$-plane with $\C$ in the obvious way. To find the stereographic projection of the point $z = (x_1, x_2) \in \C$, draw the line containing $z$ and the north pole of the sphere, $N = (0,0,1)$. Observe that this line intersects the sphere in exactly one other point $Z$. This second intersection point is the stereographic projection of $z$.
+
+To reverse the process, given a point $Z$ on the sphere, draw the line containing $Z$ and $N$. The line intersects the $(x_1, x_2)$-plane in exactly one point $z$, and $z$ is the inverse stereographic projection of the point with which we began.
+
+Observe that the equator is fixed by the stereographic projection (why?), points of the plane inside the unit circle ($|z| < 1$) are mapped to the bottom half of the sphere, and points of the plane outside the unit circle ($|z| > 1$) are mapped to the top half with the exception of the north pole $N$. 
+
+Coordinate expressions for the stereographic projection and its inverse are as follows (these are derived in Saff and Snider). If $z = (x, y)$ and $Z = (x_1, x_2, x_3)$, then these are related by
+\[
+    x_1 = \frac{2\ \Re{z}}{|z|^2 + 1}, \quad x_2 = \frac{2\ \Im{z}}{|z|^2 + 1}, \quad x_3 = \frac{|z|^2 - 1}{|z|^2 + 1}
+\]
+and for the inverse relation
+\[
+    \Re{z} = \frac{x_1}{1 - x_3}, \qquad \Im{z} = \frac{x_2}{1 - x_3}.
+\]
+
+\section{Images of curves} % (fold)
+\label{sec:images_of_curves}
+When studying mappings like the stereographic projection, one quickly moves on from watching what happens to individual points. It is more instructive to see how whole regions of the plane, or the curves that bound them, are transformed. It is geometrically evident that the $x$- and $y$-axes in the plane $\C$ are transformed to \emph{circles} on the sphere. It is at least plausible that other lines through the origin are also transformed to circles. All the circles obtained this way are examples of \emph{great circles}: that is, circles whose center is the center of the sphere. This particular family of circles are the lines of longitude on the sphere: they all pass through the north and south poles.
+
+The utility of the following theorem is impossible to overestimate.
+\begin{theorem} \label{thm:circlestocircles}
+  Under stereographic projection, all lines and circles in the plane map to circles on the Riemann sphere, and all circles on the Riemann sphere are obtained in this way.
+\end{theorem}
+This is proved in Saff and Snider. It gives us a delightfully unified perspective on plane geometry, among other things. For example, \emph{any pair of lines in $\C$ intersects in exactly one point on the Riemann sphere}. If the two lines in $\C$ are not parallel, they intersect in the usual way. But if they are parallel, their circles will intersect at the north pole of the Riemann sphere. This gives rise to a wonderfully elegant and useful convention.
+
+Students of perspective drawing know what to call the idealized point at which parallel lines intersect: it is the point at infinity, which we will simply denote by $\infty$. We add this new point to the complex number system, obtaining $\hat{\C} = \C \cup \{ \infty \}$, the \emph{extended complex plane}. If we extend the stereographic projection map to $\hat{\C}$ by sending $\infty$ to the north pole $(0, 0, 1)$, then stereographic projection becomes a bijective function.
+
+We will often adopt the convention that the term ``circle'' refers to any circle or line in $\C$. Then Theorem~\ref{thm:circlestocircles} is often sloganized as ``stereographic projection takes circles to circles''. This is true whether one is referring to the map from $\hat{\C}$ or to $\hat{\C}$.
+
+Multiplication and addition don't, in general, have nice geometric interpretations on the sphere. But as you see in the Exercises, conjugation and inversion do.
+
+
+% section images_of_curves (end)
+\begin{exercises}
+  \begin{enumerate}
+  \item Sketch the images of the following regions on the sphere under the stereographic projection. 
+    \begin{enumerate}
+      \item The lower hemisphere $x_3 < 0$.
+      \item The polar ``cap'' $3/4 \leq x_3 \leq 1$.
+      \item Lines of ``latitude'' $x_1 = \sqrt{1 - x_3^2} \cos \theta$, $x_2 = \sqrt{1-x_3^2} \sin \theta$, for fixed $x_3$ and $0 \leq \theta \leq 2\pi$.
+      \item Lines of ``longitude'' $x_1 = \sqrt{1 - x_3^2} \cos \theta$, $x_2 = \sqrt{1-x_3^2} \sin \theta$, for fixed $\theta$ and $-1 \leq x_3 \leq 1$.
+    \end{enumerate}
+    \item Let $z \in \C$ and let $Z$ be its image on the sphere. Show that the antipodal point $-Z$ is the stereographic image of $1/\conj{z}$.
+    \item Show that rotation of the sphere by $\pi$ radians about the $x_1$-axis corresponds under the stereographic projection to the inversion map $z \mapsto 1/z$. Of which point must $\infty$ be the inverse?
+  \end{enumerate}
+\end{exercises}
+\end{document}

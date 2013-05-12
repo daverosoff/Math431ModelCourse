@@ -1,0 +1,150 @@
+\documentclass[twocolumn,12pt]{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[fontsize=12pt,baseline=14pt]{grid}
+\usepackage[top=5.5cm,
+  bottom=2.5cm,
+  left=2.5cm,
+  right=2.5cm,
+]{geometry}
+\usepackage{xparse}
+\usepackage{fourier}
+\usepackage{amsmath,amsthm}
+\usepackage{amssymb,latexsym}
+%\input{commands}
+\usepackage{MnSymbol}
+\usepackage{gridleno}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=yotepurple,
+  citecolor=grlnblue,
+  urlcolor=grlngray}
+
+\usetikzlibrary{calc,decorations.markings}
+
+\NewDocumentCommand\Z{}{\mathbf{Z}}
+\NewDocumentCommand\C{}{\mathbf{C}}
+\NewDocumentCommand\R{}{\mathbf{R}}
+\RenewDocumentCommand{\Re}{m}{\mathrm{Re}\;#1}
+\RenewDocumentCommand{\Im}{m}{\mathrm{Im}\;#1}
+%\NewDocumentCommand{\deg}
+\course{Complex Analysis}
+\courseid{431-01}
+\professor{Dave Rosoff}
+\term{Spring 2013}
+\topic{Polynomials, factoring, and zeroes}
+\date{March 15, 2013 (Fri)}
+
+%\hbadness=99999 % Make TeX remain silent
+
+\begin{document}
+
+\makeheader
+
+\begin{summary}
+
+  We establish essential facts regarding the multiplicative structure of the polynomial and rational functions. These functions are the foundation of further investigation into the behavior of analytic functions.
+
+\end{summary}
+
+\section{Setup}
+We take the notions of \emph{polynomial function}, \emph{rational function}, \emph{degree} for granted\footnote{The zero polynomial has degree $-\infty$, while other constant polynomials have degree $0$.}. The degree of a rational function is defined to be its numerator degree minus its denominator degree. 
+
+When thinking about rational and polynomial functions, it's very helpful to bear in mind that they are a lot like rational numbers and integers, respectively. We'll point out some of the similarities as we go.
+
+\section{Polynomials and factoring}
+We all kind of ``know'' that a polynomial of degree $2$ has at most 2 zeroes. In fact, this is true for polynomials of any degree. Therefore, once we check that $2$, $-1$, and $-3$ are zeroes of the polynomial
+\[
+  p_3(z) = -2z^3 - 4z^2 + 10z + 12, 
+\]
+we know there won't be any more. (We'll prove this fact about polynomials over $\C$ shortly.) We'll begin with a more fundamental connection, which is the most important fact about polynomials and their factors.
+\begin{Theorem} \label{thm:zeroesfactors}
+  Let $p(z)$ be a polynomial, and suppose that $a \in \C$ is a zero of $p(z)$(that is, suppose $p(a) = 0$). Then there is another polynomial $p_1(z)$, of degree one less than $\deg{p}$, satisfying
+  \[
+    p(z) = p_1(z)(z-a).
+  \]
+\end{Theorem}
+Whenever $p$, $q$, $r$ are polynomials such that $p = qr$, we say that $q$ divides $p$ (of course, $r$ divides $p$ too). The implication is much like in the realm of the integers, where when we say something like ``$4$ divides $12$'' we are clearly implying that the remainder is 0. Hence we can rephrase the theorem as saying that $(z-a)$ divides $p(z)$ whenever $p(a) = 0$. The converse of the theorem is obvious: if $p(z) = (z - a)p_1(z)$, then putting $z = a$ on the right side yields $p(a) = 0$. Therefore, \emph{the zeroes of a polynomial are in one-to-one correspondence with its linear factors}. This is a very important thing to keep in mind. Get a tattoo if you need to.
+
+The proof of Theorem~\ref{thm:zeroesfactors} uses a result called the division theorem for polynomials, stated below. It is directly analogous to a result for integers that you learned in elementary school (really).
+\begin{Theorem}[Division theorem] \label{thm:divisionpoly}
+  Let $p(z)$ be a polynomial of degree $n$ and let $q(z)$ be a nonzero polynomial of degree $m < n$. Then there exist polynomials $q_1(z)$ and $r(z)$, with $\deg{r(z)} < m$, such that
+  \[
+    p(z) = q_1(z) q(z) + r(z).
+  \]
+\end{Theorem}
+For comparison, here is the analogous theorem for integers, which I believe is still called ``converting improper fractions to mixed numbers'' in school. We state it only for positive integers in the interest of clarity, but it is true for all integers.
+\begin{Theorem}[Division theorem for integers] \label{thm:divisioninteger}
+  Let $a$ be a positive integer and let $b$ be a nonzero integer with $|b| < |a|$. Then there are integers $q_1$ and $r$, with $0 \leq r < |b|$, such that
+  \[
+    a = q_1 b + r.
+  \]
+\end{Theorem}
+The integers $q_1$ and $r$ are called the \emph{quotient} and \emph{remainder} of the division, respectively. The polynomials $q_1$ and $r$ have exactly analogous functions. Notice that degree stands in for absolute value, helping us measure the ``size'' of polynomials.
+\begin{proof}[Proof of Theorem~\ref{thm:zeroesfactors}]
+  Suppose that $p(a) = 0$. We will use the division theorem~\ref{thm:divisionpoly} to show that $p(z) = (z-a)p_1(z)$ where $p_1(z)$ has degree 1 less than $\deg{p(z)}$. Applying the division theorem with $q(z) = z-a$, we obtain polynomials $q_1(z)$ and $r(z)$ satisfying
+  \[
+    p(z) = q_1(z)q(z) + r(z).
+  \]
+  Let us evaluate both sides at $z = a$. By hypothesis, the left-hand side is zero at $z = a$. Therefore the right side is zero as well. Now the degree of $r(z)$ is at most 0, since $\deg{r(z)} < \deg{q(z)}$ in the theorem. Thus $r(z)$ is a constant. Evidently we have $r(z) = 0$ for all $z$; otherwise, we would have proved that a nonzero constant is zero, which is preposterous. Thus we have established that $p(z) = (z-a)q(z)$. It remains to see that $\deg{q(z)} = \deg{p(z)} - 1$; we appeal to the additivity of degree, that 
+  $$\deg{PQ} = \deg{P} + \deg{Q}.$$
+\end{proof}
+The division theorem allows us to write a polynomial in \emph{factored form}, provided we know all its zeroes. In general, these are hard to find; there is no general method for doing so (it is proved! there cannot be one, in the sense of, say, the quadratic formula). 
+
+As mentioned above, we all ``know'' that polynomials of degree $n$ have $n$ zeroes, but the first person to really \emph{know} why may have been, as is universally attested, the great Gauss, who gave the first proof in his doctoral dissertation in 1799 (at age 22).
+\begin{Theorem}[Fundamental Theorem of Algebra] \label{thm:fta}
+  Every nonconstant polynomial with complex coefficients has a zero in $\C$.
+\end{Theorem}
+We will prove this theorem later, using the theory of complex line integrals.
+
+Together with the division theorem, the fundamental theorem of algebra shows that a polynomial of degree $n$ has $n$ (not necessarily distinct) roots. We will need to pay close attention to the multiplicities. Applying them alternately we find that such a polynomial $p(z)$ may be written
+$p(z) = a_n (z - z_1) \cdots (z - z_n)$. We apply Theorem~\ref{thm:fta} to $p(z)$ to obtain $z_1$. Then we divide $p(z)$ by $(z - z_1)$ using Theorem~\ref{thm:divisionpoly}. We obtain a quotient $p_1(z)$ of degree $n-1$, to which we apply the fundamental theorem again, obtaining $z_2$, and so on. The constant $a_n$ is the degree-zero polynomial at which this process terminates.
+\begin{Theorem}
+  If $p(z)$ has real coefficients, then it is a product of linear and quadratic factors, each having real coefficients.
+\end{Theorem}
+\begin{proof}
+  Exercise.
+\end{proof}
+\section{Taylor polynomials}
+We will need to make frequent use of a certain kind of \emph{change of variable}. 
+\begin{example}
+  Express $p(z) = 12+10z-4z^2-2z^3$ in powers of $(z-1)$.
+\end{example}
+\begin{proof}[Solution]
+  Observe that, if $b_0 + \cdots b_3(z-1)^3 = p(z)$, then the $b_i$ satisfy the first equation below, leading directly to the second.
+\begin{align*}
+    p^{(n)}(1) &= n!b_n, \quad n = 0, 1, 2, 3, \\
+    b_n &= \frac{p^{(n)}(1)}{n!}, \quad n = 0, 1, 2, 3.
+\end{align*}
+We find $b_0 = 16$, $b_1 = -4$, $b_2 = -10$, $b_3 = -2$.
+\end{proof}
+This is completely general, and aside from questions of convergence, extends immediately to nonpolynomial functions as well, recovering the familiar(?) Taylor series. The expression 
+\[
+  16 - 4(z - 1) - 10(z-1)^2 - 2(z-1)^3
+\]
+that results is called the Taylor form of the polynomial $p(z)$ centered at $z = 1$. 
+
+It is clear that the Taylor form of a polynomial $p(z)$ centered at $z = z_0$ lacks a constant term if and only if $p(z_0) = 0$. The Taylor forms are the key to understanding \emph{multiplicity} of zeroes. You have encountered the notion of multiplicity before, in the guise of ``repeated roots''. These are exponents greater than 1 in a polynomial factorization. For example, the  polynomial $z^2 - 2z + 1$ has a double zero at $z = 1$ (that is, a zero of multiplicity 2). That is because its Taylor form at $z = 1$ is
+\[
+  (z-1)^2.
+\]
+Notice that both the constant and the linear term are missing. This indicates the multiplicity of the zero. Since the $n$th Taylor coefficient at $z_0$ is $p^{(n)}(z_0)/n!$, we see that the multiplicity of the zero of $p(z)$ at $z = z_0$ is related to the number of derivatives of $p$ that vanish at $z = z_0$. This is made precise in the next proposition.
+\begin{proposition}
+  Let $p$ be a polynomial. Then $z_0$ is a zero of $p$ of multiplicity $k$ if and only if
+  \begin{align*}
+    p(z_0) = p'(z_0) &= \cdots = p^{(k-1)}(z_0) = 0, \\
+    p^{(k)}(z_0) &\ne 0.
+  \end{align*}
+\end{proposition}
+Now let $f$ be any function that is analytic at $z_0$ (recall that this means that there is an open set containing $z_0$ throughout which $f$ is differentiable). Goursat's theorem, which we have stated but shall not prove, shows that $f$ possesses derivatives of all orders near $z_0$. Thus we are free to make the following definition.
+\begin{definition}
+  Let $f$ be analytic at $z_0$. We say that $z_0$ is a zero of $f$ of multiplicity $k$ provided that
+  \begin{align*}
+    f(z_0) = f'(z_0) &= \cdots = f^{(k-1)}(z_0) = 0, \\
+    f^{(k)}(z_0) &\ne 0.
+  \end{align*}
+\end{definition}
+This turns out to be an extremely useful notion. Without the formulation in terms of Taylor coefficients, it would not be available to us, because the Fundamental Theorem of Algebra does not apply to functions that are not polynomials. Before we may proceed with our analysis, we need to discuss the \emph{rational functions}. They are necessary because analytic functions need not extend analytically over the entire complex plane, like polynomials do.
+\end{document} 

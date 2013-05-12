@@ -226,3 +226,6 @@ pip-log.txt
 *[Ee]xam*
 *[Ss]olution*
 *.out
+*.glo
+*.idx
+*.ist

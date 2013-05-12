@@ -1,0 +1,167 @@
+\documentclass[twocolumn,12pt]{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[fontsize=12pt,baseline=14pt]{grid}
+\usepackage[top=5.5cm,
+  bottom=2.5cm,
+  left=2.5cm,
+  right=2.5cm,
+]{geometry}
+\usepackage{xparse}
+\usepackage{fourier}
+\usepackage{amsmath,amsthm}
+\usepackage{amssymb,latexsym}
+%\input{commands}
+\usepackage{MnSymbol}
+\usepackage{gridleno}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=yotepurple,
+  citecolor=grlnblue,
+  urlcolor=grlngray}
+
+\usetikzlibrary{calc,decorations.markings}
+
+\NewDocumentCommand{\Z}{}{\mathbf{Z}}
+\NewDocumentCommand{\C}{}{\mathbf{C}}
+\NewDocumentCommand{\R}{}{\mathbf{R}}
+\RenewDocumentCommand{\Re}{m}{\mathrm{Re}\;#1}
+\RenewDocumentCommand{\Im}{m}{\mathrm{Im}\;#1}
+%\NewDocumentCommand\arg{O{}}{\mathrm{arg}\;#1}
+%\DeclareMathOperator{\arg}{arg}
+\NewDocumentCommand\cis{O{}}{\mathrm{cis}\mkern2mu #1}
+\NewDocumentCommand\Arg{O{}}{\mathrm{Arg}\mkern1mu #1}
+\RenewDocumentCommand{\arg}{O{}O{}}{\mathrm{arg}_{#2}\mkern1mu #1}
+\NewDocumentCommand\conj{m}{\overline{#1}}
+%\DeclareMathOperator{\cis}{cis}
+%\DeclareMathOperator{\Arg}{Arg}
+\course{Complex Analysis}
+\courseid{431-01}
+\professor{Dave Rosoff}
+\term{Spring 2013}
+\topic{Some Topology}
+\date{February 20, 2013 (Wed)}
+
+
+\begin{document}
+
+\makeheader
+
+\begin{summary}
+We develop the topological ideas needed to discuss differentiability in the complex sense.
+\end{summary}
+\section{Openness and connectedness}
+The vagueness that we can get away with in elementary calculus doesn't work so well in complex analysis. The reason is that the \emph{topology} of the plane is more complicated than the topology of the line. Topology is the study of continuity and all related concepts. Its foundational idea is that of \emph{open set}. Open sets are those whose shape is appropriate for the domain of a differentiable function. Intuitively, they need to be ``filled in'' and their boundaries can't be too ``fractal'', whatever that means.
+
+Recall that for the derivative of an ordinary function $f$ to make sense at $x = a$, it is at the very least necessary that $f$ be defined for all points sufficiently close to $a$ (so that we may discuss the limit of the difference quotient as $x \to a$). In essence this is the definition of \emph{open set}. If $a$ is a point in the set, then the set also contains all the points that are ``close enough'' to $a$. Open sets are a generalization of open intervals in $\R$. In fact, every open set in $\R$ is a union of intervals. This last fact is the reason that you don't much hear the phrase ``open set'' in elementary calculus: the simpler notion of ``open interval'' is enough.
+
+Let us agree to write $B(x, \delta)$ for the disk of radius $\delta$ around the point $z$. That is, 
+\[
+    B(z, \delta) = \{ z \in \C : |z - \zeta| < \delta \}.
+\]
+We then make the following definition.
+\begin{definition}
+    Let $U \subset \C$ be any subset. We say that $U$ is ``open in $\C$'' (frequently, ``open'') if, for each point $z \in U$, there is a number $\delta_z > 0$ such that
+    \[
+        B(z, \delta) \subset U \text{ whenever } \delta < \delta_z.
+    \]
+\end{definition}
+The next proposition gives you what makes an open interval \emph{open}. We use the exact same definition for ``open in $\R$'', but with the real absolute value understood instead of the complex one.
+\begin{proposition}
+    Let $I \subset \R$ be an open interval. Then $I$ is open in $\R$.
+\end{proposition}
+\begin{proof}
+    Suppose that $I = (a,b)$. It is enough to show how to compute $\delta_x$ for every $x \in I$. Choose $x \in I$ and let
+    \[
+        \delta_x = \min \{ x - a, b - x \}.
+    \]
+    Then $B(x, \delta_x) = (x - \delta_x, x + \delta_x) \subset I$. (You should try to prove this for yourself. It may be intuitively clear, but that is not the same thing\footnote{Proofs are convincing even to the unreasonable.}. You will need to use the triangle inequality.)
+\end{proof}
+
+Just as open intervals are special open sets in the line, we have a collection of special open subsets of the plane $\C$.
+\begin{definition} \label{def:opendisk}
+    All sets of the form $B(z, \delta)$ are called \emph{open disks}. Saff and Snider call them \emph{circular neighborhoods}, which is fine but nonstandard. The \emph{open unit disk} is the set $B(0, 1)$.
+\end{definition}
+\begin{koan}
+    Would open squares work just as well? Diamonds (tilted squares)? Why or why not?
+\end{koan}
+\begin{definition} \label{def:interiorpoint}
+    If $U \subset \C$ and $x$ is a point of $U$, we say that $x$ is an \emph{interior point} of $U$ if $B(x, \delta) \subset U$ for some $\delta > 0$.
+\end{definition}
+This last definition should be interpreted as saying that interior points are those points that have ``breathing room'' or ``wiggle room'' around them. They are not ``on the edge'' of their sets. Take care to remember that however useful and instructive these metaphors may be, all proofs must ultimately be couched in terms of the definitions of the terms in question and the propositions that have been proved using them.
+\begin{definition} \label{def:openset}
+    The set $U \subset \C$ is \emph{open} if all of its points are interior points.
+\end{definition}
+A moment's reflection should convince you that the open unit disk, and indeed all open disks, are open in the sense of Definition~\ref{def:openset}.
+
+We wish to investigate the phenomenon of complex differentiability. In order to talk sensibly about it, we will need the notion of \emph{limit} of a function $f$ at a point $z$. Unless the function is also defined for all points \emph{sufficiently near to $z$}, there is no way the limit can exist---and hence no way the function can be differentiable. Hence all domains of differentiability are open sets. If you refer back to your calculus book, you will see that all the theorems about differentiability are phrased so that the functions involved are defined on open intervals.
+
+Little children know the following piece of common sense.
+\begin{fact} \label{fact:derzeroconstant}
+    If a function's derivative is everywhere zero, the function is constant.
+\end{fact}
+But they are wrong. Consider the function $f$ defined on $\R - \{0\}$ by the formula
+\[
+    f(x) = \begin{cases}
+        1 & \text{x > 0,} \\
+        -1 & \text{x < 0}.
+    \end{cases}
+\]
+This function is obviously differentiable throughout its domain, with derivative identically 0. Yet it is nonconstant, in defiance of all our intuition.
+
+The explanation of this paradox is that the domain of $f$ in the foregoing example is not a \emph{connected set}. Connectedness is the missing property that makes Fact~\ref{fact:derzeroconstant} a true statement. When this theorem is stated in your calculus book, the domain of $f$ is specified to be an \emph{interval}. Intervals happen to be connected, so there is no need for this property even to be mentioned in a calculus course. But there are many connected open sets in $\C$ that are not open disks.
+
+Saff and Snider give the following as the definition of connectedness, which is a little dishonest. It is actually the definition of a stronger property, called \emph{path-connectedness}. (``Stronger'' means that every path-connected set is connected, but not vice versa.) 
+\begin{definition} \label{def:pathconnected}
+    A set is path-connected if every pair of points in the set can be connected by a union of line segments. (See the figures in the text.)
+\end{definition} 
+You don't have to worry about the distinction between connectedness and path-connectedness, but I thought I should tell you that they really are not the same thing in general. We will never encounter a situation where the difference matters.
+\begin{definition} \label{def:domain}
+    A \emph{domain} is a connected open subset\footnote{You should try to prove: The empty set $\emptyset = \{\}$ is both connected and open---vacuously.} of $\C$.
+\end{definition}
+\emph{Domains} are the most important sets in complex analysis. They are the sets that are best suited to be the domains of differentiable functions. Hence the reuse of the word.
+
+Theorem 1 of Saff and Snider \S1.6 is the 2-dimensional analog of Fact~\ref{fact:derzeroconstant}. Its proof makes essential use of the hypothesis that the domain of the function in question be connected. Here is another commonplace calculus Fact with a hidden connectedness hypothesis. Again, do not think that authors of calculus texts are dishonest; rather, the notion of connectedness is inherent in the notion of ``interval'', so that it is never discussed separately. It is often called the Intermediate Value Property of continuous functions.
+\begin{fact} \label{fact:ivp}
+    Suppose that $f$ is a continuous function and that $f(a) < f(b)$. Then for each $c \in (f(a), f(b)$, there is $x \in (a,b)$ with $f(x) = c$.
+\end{fact}
+The same example function as above will do for a counterexample: we have $f(-1) = -1$ and $f(1) = 1$, but there is no solution to the equation $f(x) = 0$. The problem is that the domain of the function is disconnected.
+
+Intuitively, a set is connected if it is all one piece.
+\section{Some more topology}
+Perhaps it is not surprising that just as open intervals have a generalization in open sets, closed intervals generalize into something called \emph{closed sets}. We begin with a preliminary definition.
+\begin{definition}
+    Let $U \subset \C$ and $z \in U$. We say that $z$ is a \emph{boundary point} of $U$ if every neighborhood of $z$ contains at least one point of $U$ and one point not in $U$. In other words, $z$ is a boundary point of $U$ if, for all $\delta > 0$,
+    \[
+        B(z, \delta) \cap U \ne \emptyset, \quad B(z, \delta) \cap (\C - U) \ne \emptyset.
+    \]
+\end{definition}
+\begin{definition}
+    We say that $U \subset \C$ is \emph{closed in $\C$} (often ``is closed'') if $U$ contains all its boundary points.
+\end{definition}
+\begin{center}
+    {\Large W A R N I N G !}
+
+    Most sets are neither open nor closed! 
+
+    ``Not open'' is not the same as ``closed''! 
+
+    ``Not closed'' is not the same as ``open''!
+\end{center}
+Finally, it will be essential going forward to have definitions that specify which sets we regard as ``large''.
+\begin{definition}
+    A subset $U \in \C$ is \emph{bounded} if there exists $M > 0$ with $U \subset B(0, M)$. Otherwise $U$ is \emph{unbounded}.
+\end{definition}
+Saff and Snider make the following definition, which is mildly dishonest\footnote{The famous Heine--Borel theorem says that a subset of $\R^n$ is closed and bounded if and only if it is compact.}. The distinction will be of no concern to us.
+\begin{definition}
+    A subset $U$ of $\C$ is \emph{compact} if it is both closed and bounded.
+\end{definition}
+One more and done.
+\begin{definition}
+    A \emph{region} is a domain together with some part of its boundary.
+\end{definition}
+
+
+\end{document}

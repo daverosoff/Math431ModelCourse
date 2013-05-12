@@ -1,0 +1,171 @@
+\documentclass[twocolumn,12pt]{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[fontsize=12pt,baseline=14pt]{grid}
+\usepackage[top=5.5cm,
+  bottom=2.5cm,
+  left=2.5cm,
+  right=2.5cm,
+]{geometry}
+\usepackage{xparse}
+\usepackage{fourier}
+\usepackage{amsmath,amsthm}
+\usepackage{amssymb,latexsym}
+%\input{commands}
+\usepackage{MnSymbol}
+\usepackage{gridleno}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=headtitle,
+  citecolor=grlnblue,
+  urlcolor=grlngray}
+
+\usetikzlibrary{calc,decorations.markings}
+
+\NewDocumentCommand{\Z}{}{\mathbf{Z}}
+\NewDocumentCommand{\C}{}{\mathbf{C}}
+\NewDocumentCommand{\R}{}{\mathbf{R}}
+\RenewDocumentCommand{\Re}{m}{\mathrm{Re}\;#1}
+\RenewDocumentCommand{\Im}{m}{\mathrm{Im}\;#1}
+%\NewDocumentCommand\arg{O{}}{\mathrm{arg}\;#1}
+%\DeclareMathOperator{\arg}{arg}
+\NewDocumentCommand\cis{O{}}{\mathrm{cis}\mkern2mu #1}
+\NewDocumentCommand\Arg{O{}}{\mathrm{Arg}\mkern1mu #1}
+\RenewDocumentCommand{\arg}{O{}O{}}{\mathrm{arg}_{#2}\mkern1mu #1}
+\NewDocumentCommand\conj{m}{\overline{#1}}
+%\DeclareMathOperator{\cis}{cis}
+%\DeclareMathOperator{\Arg}{Arg}
+\course{Complex Analysis}
+\courseid{431-01}
+\professor{Dave Rosoff}
+\term{Spring 2013}
+\topic{Multiplication and Polar Representation}
+\date{February 13, 2013 (Wed)}
+
+
+\begin{document}
+
+\makeheader
+
+\begin{summary}
+\end{summary}
+
+\section{Recap}
+We have seen how a complex number admits a unique \emph{standard form}, its representation in the form $x + iy$. (Whenever you see an expression of this shape, it is very strongly implied that $x$ and $y$ are real. Such is the ubiquity of the standard form.) There is another kind of standard form of a complex number, using the polar coordinate system familiar from analytic geometry (bundled with ``Calc 3'' here at C of I).
+
+\section{New operations}
+Along with the four usual operations of arithmetic, there are a few more important \emph{unary} operations on complex numbers. The simpler two are called the \emph{conjugation} and \emph{modulus} or \emph{absolute value} operators. Notice that they are both defined in terms of the standard form. This is made possible by the \emph{uniqueness} of the standard form. If a complex number had lots of different real and imaginary parts, it would be much harder to define things this way.
+%
+\begin{definition}
+  If $z = x+iy$ is a complex number, its \emph{modulus} or \emph{absolute value} is the nonnegative real number
+  \begin{gridenv}
+  \[
+      |z| = \sqrt{x^2 + y^2} = \sqrt{(\Re{z})^2 + (\Im{z})^2}
+    \]
+  \end{gridenv}
+\end{definition}
+%
+The absolute value operator deserves its name because, like the absolute value of a real number, it gives the ``distance from 0''. It is also called the modulus because $|x+iy| = ||\langle x, y \rangle||$. That is, the absolute value of a complex number is equal to the length of the vector in $\R^2$ it determines. The conjugation operation is defined next.
+\begin{definition}
+  If $z = x + iy$ is a complex number, its \emph{complex conjugate} (often, simply \emph{conjugate}) is the complex number $\bar{z} = x - iy$. Observe that $z$ and $\bar{z}$ have the same real part, but that their imaginary parts differ by a sign.
+\end{definition}
+These two operators are intimately related.
+\begin{proposition}
+  If $z$ is a complex number, then $z \bar{z} = |z|^2$.
+\end{proposition}
+\begin{proof}
+  Express both sides in terms of the standard form $z = x + iy$. (The reader is invited to fill in the details.)
+\end{proof}
+Our last new operator is more subtle than the other two. This is because, unlike the modulus and the conjugate, the \emph{argument} of a complex number is not uniquely defined.
+\begin{definition}
+  The \emph{argument} of the complex number $z$ is defined to be any of the various angles between the positive real axis (the $x$-axis) and the segment connecting $0$ to $z$, measured counterclockwise (in radians, now and forever).
+\end{definition}
+Evidently, the argument of a complex number is only defined up to multiples of $2\pi$. That is, unless we make further agreement about how to choose values of the argument, we must agree that multiples of $2\pi$ don't count. 
+That's why up to this point I have resisted the temptation to define the argument ``function'' $\arg$ via the formula
+\begin{gridenv}
+  \[
+    \arg[z] = \theta.
+  \]
+\end{gridenv}
+Such a definition would violate the principle that functions are \emph{single-valued}. There are too many perfectly good values of $\theta$ to choose from.
+
+
+
+\section{The polar representation}
+Now the connection between complex numbers and polar coordinates should be completely manifest. If $z$ has standard form $x + iy$, then it corresponds to the point $(x,y) \in \R^2$. This point has polar coordinates $(r, \theta)$, where $r$ is the distance from $z$ to the origin and $\theta$ is the argument of $z$. This doesn't really require proof; reread the last few paragraphs until it's obvious. ``But wait!'' you say. ``The argument of $z$ isn't just one number!'' That is correct. But any of the possible values of the argument of $z$ will do for $\theta$. Polar coordinates are not uniquely defined either. Some people do allow for $r$ to be negative when discussing polar coordinates but we will restrict it to nonnegative values.
+Since we have already seen how the complex numbers may be identified with the plane, it isn't surprising that in this new system, we still need two real numbers to represent a single complex number.
+%
+If you draw a picture (\emph{do it}) of the point $z = x + iy$, the segment connecting $z$ with $0$, and the segments connecting $z$ with $x$ and $iy$, a moment's thought will remind you that
+%\begin{gridenv}
+  \begin{align*}
+    z &= r(\cos \theta + i \sin \theta) \\
+      &= r \cis{\theta} 
+  \end{align*}
+%\end{gridenv}
+\begin{definition}
+  If $z$ is a nonzero\footnote{We take as part of the definition that $z = 0$ does not have a polar form, because there is neighborhood of $0$, however small, on which \emph{any} branch of $\arg$ exists. For this reason we call $0$ a \emph{branch point} of $\arg$.}complex number and $z = r \cis{\theta}$ as above, then $r \cis{\theta}$ is called a \emph{polar representation} or \emph{polar form} of $z$.
+\end{definition}
+To reiterate, polar forms are not unique, due to the indeterminacy inherent in the definition of $\theta$. This is just something we have to live with. We'll see throughout the course that it is a central feature of life in the complex plane, with many important ramifications. 
+
+On the other hand, if we are willing to tolerate some discontinuity, we can certainly restrict $\theta$ down to the point where polar representations are uniquely determined. Observe that if $(t, t + 2 \pi]$ is any half-open interval of length $2 \pi$, then every nonzero complex number $z$ has exactly one polar representation with $t \leq \theta < t + 2 \pi$. Thus, there are no problems in defining a \emph{single-valued} function
+\begin{gridenv}
+  \[
+    \Arg z = \theta
+  \]
+\end{gridenv}
+as long as it is understood that we are choosing $\theta$ from the half-open interval $(-\pi, \pi]$. A restriction like this is called a \emph{branch cut}, for reasons to be made clear later, and the honest, legit function $\Arg$ is called a \emph{branch} of the nebulous, mysterious object $\arg$. The latter may be many things, but it is not a function in our usual sense of the word. Now $\Arg$ is not perfect either; it is a function in good standing, but it is \emph{discontinuous}. In fact, it is discontinuous at every point on the nonpositive real axis, as the next proposition shows.
+\begin{proposition} \label{prop:argdiscontinuous}
+  Let $t$ be a real number. Then the branch $\arg[][t]$ coming from the branch cut interval $(t, t+2\pi]$ is continuous throughout the plane, except at complex numbers with argument $t + 2\pi$. 
+\end{proposition}
+\begin{corollary}
+  The principal branch $\Arg$ is discontinuous along the negative real axis.
+\end{corollary}
+\begin{proof}[Proof of Corollary]
+  Take $t = -\pi$ in Proposition~\ref{prop:argdiscontinuous}.
+\end{proof}
+\begin{proof}[Proof of Proposition~\ref{prop:argdiscontinuous}]
+  Our proof is informal, since we have not discussed limits and continuity yet. It is easy to see that if $\arg[z][t] = t + 2\pi$, then $\arg[][t]$ is discontinuous at $z$. For instance, let $r = |z|$, so that $z$ lies on the circle of radius $r$ centered at $0$. Consider the points on this circle that are within $\varepsilon$ of $z$, where $\varepsilon > 0$ is small. The set of such points is a little arc with center $z$. On one side of the arc, the arguments are near $t$, but on the other side, they are near $t + 2\pi$. In other words, near $z$ \emph{we can find arbitrarily close pairs of points whose arguments are widely separated}. That is the meaning of ``discontinuous''. The rest of the proof is postponed indefinitely, at least until we have defined limits and continuity for complex-valued functions.
+\end{proof}
+%
+\section{Multiplication}
+As promised, we can now exhibit the geometric nature of multiplication.
+\begin{proposition} \label{prop:polarmult}
+  Let $z_1$ and $z_2$ have polar forms $r_1 \cis{\theta_1}$ and $r_2 \cis{\theta_2}$ respectively. Then a polar form of the product $z_1 z_2$ is
+  \[
+    r_1 r_2 \cis{(\theta_1 + \theta_2)}.
+  \]
+\end{proposition}
+\begin{proof}
+  Use the addition formulas for the trigonometric functions.
+\end{proof}
+The next proposition is a useful reformulation of Proposition~\ref{prop:polarmult}. 
+\begin{proposition}
+  For any complex numbers $z_1$ and $z_2$,
+  \[
+    |z_1 z_2| = |z_1| |z_2|.
+  \]
+  If in addition $z_1$ and $z_2$ are nonzero,
+  \[
+    \arg[z_1 z_2] = \arg[z_1] + \arg[z_2].
+  \]
+\end{proposition}
+We follow Saff and Snider's convention that in equations dealing with nonfunctions such as $\arg$, the meaning of the equation is that if sensible values can be found for all but one term, then a sensible value can be found for the remaining one that verifies the equation. In addition, expressions of the form
+\[
+  z_1 = r_1 \cis{\theta_1}
+\]
+implicitly define $r_1$ as the modulus of $z_1$ and $\theta_1$ as an argument of $z_1$, just as expressions of the form
+\[
+  z_2 = x_2 + i y_2
+\]
+implicitly define $x_2$ and $y_2$ as the real and imaginary parts of $z_2$.
+
+Now observe that $\Arg[1] = 0$, so that for each nonzero $z$ we have
+\[
+  0 = \Arg[z] + \Arg[z^{-1}].
+\]
+This shows that $\Arg[z^{-1}] = -\Arg[z]$. Evidently, $\Arg[z^{-1}] = \Arg[\bar{z}]$. Hence the vectors defined by $\bar{z}$ and $\Arg[z^{-1}]$ are parallel.
+\section{Coming attractions}
+Next time, we will introduce the all-important complex exponential function $\exp{z} = e^z$. The exponential function is \textsc{The Greatest Function In The World}, the function every other function wishes it could be. Yeah.
+\end{document} 
