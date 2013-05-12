@@ -218,3 +218,6 @@ pip-log.txt
 *.prj.bak
 *.sublime-*
 *.bak
+*.log
+*.aux
+*.synctex.gz
